@@ -13,7 +13,7 @@ import "twin.macro";
 import { useLocalStorage } from "usehooks-ts";
 import useCheckSession from "hooks/useCheckSession";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faShare } from "@fortawesome/free-solid-svg-icons";
 import { saveAs } from "file-saver";
 import domtoimage from "dom-to-image";
 import ToastLoading from "components/Toasts/Loading";
@@ -77,22 +77,44 @@ const Index: React.FC = () => {
         }
     }, [isLoading]);
 
+    const [Iscapture, setIscapture] = useState<boolean>(false);
+
     const handleDownload = async () => {
         let toastKey = toast.custom((t) => (
             <ToastLoading message="Loading..." t={t} />
         ));
-        const dataUrl = await domtoimage.toPng(area.current as any, {
-            width: area.current?.clientWidth! * scale,
-            height: area.current?.clientHeight! * scale,
-            style: {
-                transform: "scale(" + scale + ")",
-                transformOrigin: "top left",
-            },
-        });
-        toast.custom((t) => <ToastSuccess message="สำเร็จ" t={t} />, {
-            id: toastKey,
-        });
-        saveAs(dataUrl, `kutable-${user?.user.student.stdId}.png`);
+
+        setIscapture(true);
+
+        setTimeout(async () => {
+            const dataUrl = await domtoimage.toPng(area.current as any, {
+                width: area.current?.clientWidth! * scale,
+                height: area.current?.clientHeight! * scale,
+                style: {
+                    transform: "scale(" + scale + ")",
+                    transformOrigin: "top left",
+                },
+            });
+            toast.custom((t) => <ToastSuccess message="สำเร็จ" t={t} />, {
+                id: toastKey,
+            });
+            saveAs(dataUrl, `kutable-${user?.user.student.stdId}.png`);
+            setIscapture(false);
+        }, 1000);
+    };
+
+    const callCreateLink = async () => {
+        let axiosWithTokenServiceFrontend = new AxiosWithTokenServiceFrontend(
+            accesstoken!
+        );
+        let { data } = await axiosWithTokenServiceFrontend.axiosInstance.post(
+            "/create-link",
+            {
+                data: JSON.stringify(groupCourse?.results[0]),
+            }
+        );
+        navigator.clipboard.writeText(`${window.location.href}share/${data.id}`)
+        toast.custom((t) => <ToastSuccess message="คัดลอกสำเร็จ" t={t} />);
     };
 
     return (
@@ -103,16 +125,30 @@ const Index: React.FC = () => {
                         <div className="font-bold text-3xl hidden md:block py-3">
                             Schedule
                         </div>
-
-                        <button
-                            onClick={() => handleDownload()}
-                            className="btn btn-sm btn-outline btn-success gap-2 w-full md:max-w-[9rem]"
-                        >
-                            <FontAwesomeIcon icon={faDownload} size={"sm"} />
-                            Save As PNG
-                        </button>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => handleDownload()}
+                                className="btn btn-sm btn-outline btn-success gap-2 "
+                            >
+                                <FontAwesomeIcon
+                                    icon={faDownload}
+                                    size={"sm"}
+                                />
+                                Save As PNG
+                            </button>
+                            <button
+                                onClick={() => callCreateLink()}
+                                className="btn btn-sm btn-outline btn-primary gap-2 "
+                            >
+                                <FontAwesomeIcon icon={faShare} size={"sm"} />
+                                แชร์รูปภาพ
+                            </button>
+                        </div>
                     </div>
-                    <div className="flex justify-end">
+                    <div className="flex justify-between items-center">
+                        <div className="hidden md:block font-bold text-xl">
+                            {groupCourse?.results[0].peroid_date}
+                        </div>
                         <div className="w-full md:max-w-[12rem]">
                             <div>
                                 <label className="label">
@@ -127,7 +163,11 @@ const Index: React.FC = () => {
                                     defaultValue={scale}
                                     className="range range-xs"
                                     step={1}
-                                    onChange={(e) => setScale(Number.parseInt(e.target.value))}
+                                    onChange={(e) =>
+                                        setScale(
+                                            Number.parseInt(e.target.value)
+                                        )
+                                    }
                                 />
                                 <div className="w-full flex justify-between text-xs px-2">
                                     <span>1</span>
@@ -245,6 +285,17 @@ const Index: React.FC = () => {
                                     />
                                 </GridContainer>
                             </div>
+                            {Iscapture && (
+                                <div className="flex gap-3 text-2xl">
+                                    สร้างโดย
+                                    <a
+                                        className="text-blue-400"
+                                        href="https://ku-table2.vercel.app"
+                                    >
+                                        ku-table2.vercel.app
+                                    </a>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

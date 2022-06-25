@@ -5,3 +5,7 @@
 - bootstrap
 - graphql
 - usehooks-ts
+
+```.env
+FIREBASE_ADMIN=
+```
