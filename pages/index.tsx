@@ -141,7 +141,7 @@ const Index: React.FC = () => {
                                 className="btn btn-sm btn-outline btn-primary gap-2 "
                             >
                                 <FontAwesomeIcon icon={faShare} size={"sm"} />
-                                แชร์รูปภาพ
+                                แชร์ตาราง
                             </button>
                         </div>
                     </div>
