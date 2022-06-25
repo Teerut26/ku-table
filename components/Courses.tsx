@@ -48,12 +48,12 @@ const checkTime = (time_from: string) => {
 };
 
 const Detail = styled.div`
- ${tw`flex items-center gap-2 cursor-pointer select-none`}
- 
- :hover{
-    font-weight: 600;
- }   
-`
+    ${tw`flex items-center gap-2 cursor-pointer select-none`}
+
+    :hover {
+        font-weight: 600;
+    }
+`;
 
 const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
     const [IsExpand, setIsEetexpand] = useState<boolean>(false);
@@ -61,8 +61,9 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
         <>
             {groupCourse?.results[0].course
                 .filter((course) => course.day_w.replaceAll(" ", "") === day)
-                .map((course) => (
+                .map((course, id) => (
                     <ChildGrid
+                        key={id}
                         className={`flex flex-col gap-3 ${className} rounded-md`}
                         start={checkTime(course.time_from).start}
                         end={checkTime(course.time_to).start}
@@ -79,19 +80,29 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                             className="flex flex-col duration-150"
                             onClick={() => setIsEetexpand(!IsExpand)}
                         >
-                            <Detail className={`${!IsExpand ? "truncate" : ""}`}>
-                                <FontAwesomeIcon icon={faBook} /> {course.subject_name_th}
+                            <Detail
+                                className={`${!IsExpand ? "truncate" : ""}`}
+                            >
+                                <FontAwesomeIcon icon={faBook} />{" "}
+                                {course.subject_name_th}
                             </Detail>
                         </div>
                         <div
                             className="flex flex-col duration-150"
                             onClick={() => setIsEetexpand(!IsExpand)}
                         >
-                            <Detail className={`${!IsExpand ? "truncate" : ""}`}>
-                                <FontAwesomeIcon icon={faFlag} /> {course.room_name_th}
+                            <Detail
+                                className={`${!IsExpand ? "truncate" : ""}`}
+                            >
+                                <FontAwesomeIcon icon={faFlag} />{" "}
+                                {course.room_name_th}
                             </Detail>
-                            <Detail className={`${!IsExpand ? "truncate" : ""}`}>
-                                <FontAwesomeIcon icon={faFlag} /> {course.section_type_th} หมู่ {course.section_code}
+                            <Detail
+                                className={`${!IsExpand ? "truncate" : ""}`}
+                            >
+                                <FontAwesomeIcon icon={faFlag} />{" "}
+                                {course.section_type_th} หมู่{" "}
+                                {course.section_code}
                             </Detail>
                         </div>
                     </ChildGrid>
