@@ -99,7 +99,7 @@ const Index: React.FC = () => {
         <CheckLogin>
             <WithNavbar>
                 <div className="flex flex-col gap-2 py-2 ">
-                    <div className="flex justify-between items-center max-w-[100rem] mx-auto w-full">
+                    <div className="flex justify-between items-center max-w-[105rem] mx-auto w-full">
                         <div className="font-bold text-3xl hidden md:block py-3">
                             Schedule
                         </div>
@@ -142,7 +142,7 @@ const Index: React.FC = () => {
                     <div className="overflow-x-auto">
                         <div
                             ref={area}
-                            className="rounded-lg w-[100rem] bg-base-100 mx-auto"
+                            className="rounded-lg w-[170rem] bg-base-100 mx-auto"
                         >
                             <GridContainer className="bg-base-200 divide-x">
                                 <ChildGrid>Day/Time</ChildGrid>

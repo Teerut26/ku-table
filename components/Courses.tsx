@@ -64,11 +64,11 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                 .map((course, id) => (
                     <ChildGrid
                         key={id}
-                        className={`flex flex-col gap-3 ${className} rounded-md`}
+                        className={`flex flex-col ${className} rounded-md`}
                         start={checkTime(course.time_from).start}
                         end={checkTime(course.time_to).start}
                     >
-                        <div className="flex flex-col font-bold">
+                        <div className="flex justify-between font-bold">
                             <div className="truncate">
                                 {course.subject_code}
                             </div>

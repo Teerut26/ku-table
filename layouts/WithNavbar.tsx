@@ -12,7 +12,7 @@ const WithNavbar: React.FC<Props> = ({ children }) => {
         <div className="flex flex-col h-screen">
             <div tw="flex-grow">
                 <Navbar />
-                <div className={css(tw`px-3 max-w-[70rem] mx-auto`)}>{children}</div>
+                <div className={css(tw`px-3 max-w-[90rem] mx-auto`)}>{children}</div>
                 <Footer />
             </div>
         </div>
