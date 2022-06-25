@@ -20,10 +20,10 @@ const ChildGrid: React.FC<Props> = ({ end, start, children, className }) => {
         grid-column-start: ${start};
         grid-column-end: ${end};
         
-        :hover {
+        /* :hover {
             transform: translate(-5px, -5px);
             cursor: pointer;
-        }
+        } */
     `;
     return <ChildGrid className={className}>{children}</ChildGrid>;
 };

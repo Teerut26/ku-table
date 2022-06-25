@@ -1,5 +1,9 @@
+import styled from "@emotion/styled";
+import { faBook, faFlag } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GroupCourseInterface } from "interfaces/group.course.interface";
-import React from "react";
+import React, { useState } from "react";
+import tw from "twin.macro";
 import ChildGrid from "./ChildGrid";
 
 let time: { time: string; start: number; end?: number }[] = [
@@ -43,23 +47,53 @@ const checkTime = (time_from: string) => {
     return time.filter((item) => item.time === time_from)[0];
 };
 
+const Detail = styled.div`
+ ${tw`flex items-center gap-2 cursor-pointer select-none`}
+ 
+ :hover{
+    font-weight: 600;
+ }   
+`
+
 const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
+    const [IsExpand, setIsEetexpand] = useState<boolean>(false);
     return (
         <>
             {groupCourse?.results[0].course
                 .filter((course) => course.day_w.replaceAll(" ", "") === day)
                 .map((course) => (
                     <ChildGrid
-                        className={`flex flex-col ${className}`}
+                        className={`flex flex-col gap-3 ${className} rounded-md`}
                         start={checkTime(course.time_from).start}
                         end={checkTime(course.time_to).start}
                     >
-                        <div className="truncate">{course.subject_code}</div>
-                        <div className="truncate">
-                            [{course.time_from} - {course.time_to}]
+                        <div className="flex flex-col font-bold">
+                            <div className="truncate">
+                                {course.subject_code}
+                            </div>
+                            <div className="truncate">
+                                [{course.time_from} - {course.time_to}]
+                            </div>
                         </div>
-                        <div className="truncate">{course.subject_name_th}</div>
-                        <div className="truncate">{course.subject_name_en}</div>
+                        <div
+                            className="flex flex-col duration-150"
+                            onClick={() => setIsEetexpand(!IsExpand)}
+                        >
+                            <Detail className={`${!IsExpand ? "truncate" : ""}`}>
+                                <FontAwesomeIcon icon={faBook} /> {course.subject_name_th}
+                            </Detail>
+                        </div>
+                        <div
+                            className="flex flex-col duration-150"
+                            onClick={() => setIsEetexpand(!IsExpand)}
+                        >
+                            <Detail className={`${!IsExpand ? "truncate" : ""}`}>
+                                <FontAwesomeIcon icon={faFlag} /> {course.room_name_th}
+                            </Detail>
+                            <Detail className={`${!IsExpand ? "truncate" : ""}`}>
+                                <FontAwesomeIcon icon={faFlag} /> {course.section_type_th}
+                            </Detail>
+                        </div>
                     </ChildGrid>
                 ))}
         </>
