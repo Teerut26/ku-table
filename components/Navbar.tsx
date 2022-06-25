@@ -3,6 +3,7 @@ import useCheckSession from "hooks/useCheckSession";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
+import ChangeTheme from "./ChangeTheme";
 
 interface Props {}
 
@@ -18,50 +19,55 @@ const Navbar: React.FC<Props> = () => {
             <div className="bg-base-200">
                 <div className="max-w-3xl mx-auto navbar">
                     <div className="navbar-start">
-                        <div className="dropdown">
-                            <label
-                                tabIndex={0}
-                                className="btn btn-ghost btn-circle"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
+                        {isLive && (
+                            <div className="dropdown">
+                                <label
+                                    tabIndex={0}
+                                    className="btn btn-ghost btn-circle"
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M4 6h16M4 12h16M4 18h7"
-                                    />
-                                </svg>
-                            </label>
-                            <ul
-                                tabIndex={0}
-                                className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-200 rounded-box w-52"
-                            >
-                                <li>
-                                    <Link href={"/"}>หน้าหลัก</Link>
-                                </li>
-                                <li>
-                                    <Link href={"/login"}>
-                                        ลงชื่อเข้าใช้งาน
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M4 6h16M4 12h16M4 18h7"
+                                        />
+                                    </svg>
+                                </label>
+                                <ul
+                                    tabIndex={0}
+                                    className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-200 rounded-box w-52"
+                                >
+                                    <li>
+                                        <Link href={"/"}>หน้าหลัก</Link>
+                                    </li>
+                                    {!isLive && (
+                                        <li>
+                                            <Link href={"/login"}>
+                                                ลงชื่อเข้าใช้งาน
+                                            </Link>
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
+                        )}
                     </div>
                     <Link href={"/"}>
                         <div className="navbar-center">
                             <a className="normal-case text-xl flex justify-center items-center font-bold gap-2">
-                                <img src="/logo.svg" className="w-10" alt="" />{" "}
+                                <img src="/logo.svg" className="w-10 drop-shadow-md" alt="" />{" "}
                                 KUCS Table
                             </a>
                         </div>
                     </Link>
-                    <div className="navbar-end">
+                    <div className="navbar-end flex gap-3">
+                        <ChangeTheme />
                         {isLive ? (
                             <button className="btn btn-ghost btn-circle">
                                 <div className="dropdown dropdown-end">
@@ -70,7 +76,11 @@ const Navbar: React.FC<Props> = () => {
                                         className="btn btn-ghost btn-circle avatar"
                                     >
                                         <div className="w-10 rounded-full">
-                                            {ImageProfile ? <img src={ImageProfile} /> : ""}
+                                            {ImageProfile ? (
+                                                <img src={ImageProfile} />
+                                            ) : (
+                                                ""
+                                            )}
                                         </div>
                                     </label>
                                     <ul

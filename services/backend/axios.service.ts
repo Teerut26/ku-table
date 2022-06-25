@@ -8,6 +8,24 @@ export default class AxiosServiceBackend {
         });
     }
 
+    public async getGroupCourse(
+        academicYear: string,
+        semester: string,
+        stdId: string,
+        token: string
+    ) {
+        let { data } = await this.axiosInstance.get(
+            `/std-profile/getGroupCourse?academicYear=${academicYear}&semester=${semester}&stdId=${stdId}`,
+            {
+                headers: {
+                    "app-key": "txCR5732xYYWDGdd49M3R19o1OVwdRFc",
+                    "x-access-token": token,
+                },
+            }
+        );
+        return data;
+    }
+
     public async getImage(token: string): Promise<string> {
         let { data } = await this.axiosInstance.get<any>(
             "/std-profile/stdimages",
@@ -19,7 +37,10 @@ export default class AxiosServiceBackend {
                 responseType: "arraybuffer",
             }
         );
-        return "data:image/jpeg;base64,"+Buffer.from(data, "binary").toString("base64");
+        return (
+            "data:image/jpeg;base64," +
+            Buffer.from(data, "binary").toString("base64")
+        );
     }
 
     public login(username: string, password: string) {

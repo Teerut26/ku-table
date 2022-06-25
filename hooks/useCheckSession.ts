@@ -14,10 +14,9 @@ function useCheckSession(): ReturnType {
         undefined
     );
     const [isLive, setIsLive] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        setIsLoading(true);
         if (accesstoken) {
             const decoded: any = jwt_decode(accesstoken);
             const currentTime = new Date().getTime() / 1000;
@@ -26,6 +25,10 @@ function useCheckSession(): ReturnType {
                 return setIsLoading(false);
             } else {
                 setIsLive(false);
+                localStorage.removeItem("accesstoken");
+                localStorage.removeItem("renewtoken");
+                localStorage.removeItem("user");
+                localStorage.removeItem("image_url");
                 return setIsLoading(false);
             }
         }
@@ -36,7 +39,8 @@ function useCheckSession(): ReturnType {
         localStorage.removeItem("accesstoken");
         localStorage.removeItem("renewtoken");
         localStorage.removeItem("user");
-        window.location.reload()
+        localStorage.removeItem("image_url");
+        window.location.reload();
     };
 
     return { isLive, isLoading, logout };
