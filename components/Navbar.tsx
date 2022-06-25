@@ -62,7 +62,7 @@ const Navbar: React.FC<Props> = () => {
                         <div className="navbar-center">
                             <a className="normal-case text-xl flex justify-center items-center font-bold gap-2">
                                 <img src="/logo.svg" className="w-10 drop-shadow-md" alt="" />{" "}
-                                KUCS Table
+                                KU Table 2
                             </a>
                         </div>
                     </Link>

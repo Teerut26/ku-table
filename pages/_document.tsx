@@ -4,7 +4,7 @@ export default function Document() {
     return (
         <Html data-theme="light">
             <Head>
-                <title>KU Comsci Table</title>
+                <title>KU Table 2</title>
                 <meta name="nextjs-typescript-tailwind-redux-graphql" />
                 <link rel="icon" href="/logo.svg" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
