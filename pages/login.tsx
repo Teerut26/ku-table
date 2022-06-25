@@ -1,6 +1,12 @@
+import { faPizzaSlice } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ToastError from "components/Toasts/Error";
+import ToastLoading from "components/Toasts/Loading";
+import ToastSuccess from "components/Toasts/Success";
 import { LoginResponseInterface } from "interfaces/login.response.interface";
 import WithNavbar from "layouts/WithNavbar";
 import React, { useEffect, useRef } from "react";
+import toast from "react-hot-toast";
 import AxiosServiceFrontend from "services/frontend/axios.service";
 import { useLocalStorage } from "usehooks-ts";
 
@@ -28,6 +34,10 @@ const Login: React.FC<Props> = () => {
     );
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        let toastKey = toast.custom((t) => (
+            <ToastLoading message="Loading..." t={t} />
+        ));
+
         e.preventDefault();
         if (!username.current || !password.current) {
             return;
@@ -48,6 +58,9 @@ const Login: React.FC<Props> = () => {
         setUser(data);
         let imageBaseUrl = await getImageProfile(data.accesstoken);
         setImageProfile(imageBaseUrl);
+        toast.custom((t) => <ToastSuccess message="เข้าสู่ระบบสำเร็จ" t={t} />, {
+            id: toastKey,
+        });
         window.location.href = "/";
     };
 
@@ -83,9 +96,7 @@ const Login: React.FC<Props> = () => {
                 </div>
                 <div className="form-control w-full">
                     <label className="label">
-                        <span className="label-text">
-                            บัญชีผู้ใช้เครือข่ายนนทรี
-                        </span>
+                        <span className="label-text">รหัสผ่าน</span>
                     </label>
                     <input
                         ref={password}

@@ -1,7 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import groupCourseController from "controllers/group.course.controller";
-import Login from "controllers/login.controller";
-import catchErrorsFrom from "libs/_utils/errors";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

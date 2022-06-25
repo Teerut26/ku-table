@@ -91,7 +91,7 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                                 <FontAwesomeIcon icon={faFlag} /> {course.room_name_th}
                             </Detail>
                             <Detail className={`${!IsExpand ? "truncate" : ""}`}>
-                                <FontAwesomeIcon icon={faFlag} /> {course.section_type_th}
+                                <FontAwesomeIcon icon={faFlag} /> {course.section_type_th} หมู่ {course.section_code}
                             </Detail>
                         </div>
                     </ChildGrid>

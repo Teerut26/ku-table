@@ -16,6 +16,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { saveAs } from "file-saver";
 import domtoimage from "dom-to-image";
+import ToastLoading from "components/Toasts/Loading";
+import toast from "react-hot-toast";
+import ToastSuccess from "components/Toasts/Success";
 
 const GridContainer = styled.div`
     display: grid;
@@ -58,9 +61,13 @@ const Index: React.FC = () => {
     }, [isLoading]);
 
     const handleDownload = async () => {
-        setLoading(true);
+        let toastKey = toast.custom((t) => (
+            <ToastLoading message="Loading..." t={t} />
+        ));
         const dataUrl = await domtoimage.toPng(area.current as any);
-        setLoading(false);
+        toast.custom((t) => <ToastSuccess message="สำเร็จ" t={t} />, {
+            id: toastKey,
+        });
         saveAs(dataUrl, `kutable.png`);
     };
 
@@ -68,7 +75,7 @@ const Index: React.FC = () => {
         <CheckLogin>
             <WithNavbar>
                 <div className="flex flex-col gap-2 py-2 ">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center max-w-[100rem] mx-auto w-full">
                         <div className="font-bold text-3xl hidden md:block py-3">
                             Schedule
                         </div>
@@ -81,7 +88,10 @@ const Index: React.FC = () => {
                         </button>
                     </div>
                     <div className="overflow-x-auto">
-                        <div ref={area} className="rounded-lg w-[100rem] bg-base-100">
+                        <div
+                            ref={area}
+                            className="rounded-lg w-[100rem] bg-base-100 mx-auto"
+                        >
                             <GridContainer className="bg-base-200 divide-x">
                                 <ChildGrid>Day/Time</ChildGrid>
                                 <ChildGrid>8:00</ChildGrid>

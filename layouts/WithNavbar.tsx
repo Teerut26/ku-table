@@ -1,4 +1,5 @@
 import { css } from "@emotion/css";
+import Footer from "components/Footer";
 import Navbar from "components/Navbar";
 import React from "react";
 import "twin.macro";
@@ -12,6 +13,7 @@ const WithNavbar: React.FC<Props> = ({ children }) => {
             <div tw="flex-grow">
                 <Navbar />
                 <div className={css(tw`px-3`)}>{children}</div>
+                <Footer />
             </div>
         </div>
     );
