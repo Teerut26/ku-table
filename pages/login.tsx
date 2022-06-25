@@ -34,34 +34,44 @@ const Login: React.FC<Props> = () => {
     );
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
         let toastKey = toast.custom((t) => (
             <ToastLoading message="Loading..." t={t} />
         ));
 
-        e.preventDefault();
-        if (!username.current || !password.current) {
-            return;
-        }
+        try {
+            if (!username.current || !password.current) {
+                return;
+            }
 
-        let axiosServiceFontend = new AxiosServiceFrontend();
-        let { data } =
-            await axiosServiceFontend.axiosInstance.post<LoginResponseInterface>(
-                "/login",
+            let axiosServiceFontend = new AxiosServiceFrontend();
+            let { data } =
+                await axiosServiceFontend.axiosInstance.post<LoginResponseInterface>(
+                    "/login",
+                    {
+                        username: username.current.value,
+                        password: password.current.value,
+                    }
+                );
+
+            setAccesstoken(data.accesstoken);
+            setRenewtoken(data.renewtoken);
+            setUser(data);
+            let imageBaseUrl = await getImageProfile(data.accesstoken);
+            setImageProfile(imageBaseUrl);
+            toast.custom(
+                (t) => <ToastSuccess message="เข้าสู่ระบบสำเร็จ" t={t} />,
                 {
-                    username: username.current.value,
-                    password: password.current.value,
+                    id: toastKey,
                 }
             );
-
-        setAccesstoken(data.accesstoken);
-        setRenewtoken(data.renewtoken);
-        setUser(data);
-        let imageBaseUrl = await getImageProfile(data.accesstoken);
-        setImageProfile(imageBaseUrl);
-        toast.custom((t) => <ToastSuccess message="เข้าสู่ระบบสำเร็จ" t={t} />, {
-            id: toastKey,
-        });
-        window.location.href = "/";
+            window.location.href = "/";
+        } catch (error) {
+            toast.custom((t) => <ToastError message="Login Failed" t={t} />, {
+                id: toastKey,
+            });
+        }
     };
 
     const getImageProfile = async (accesstoken: string): Promise<string> => {

@@ -14,7 +14,7 @@ const GroupCourseController = async (
 
         let { data } = await axios({
             method: "get",
-            url: `https://myapi.ku.th/std-profile/getGroupCourse?academicYear=${req.query.academicYear as string}&semester=${req.query.semester as string}&stdId=${req.query.stdId as string}`,
+            url: `https://myapi.ku.th/std-profile/getGroupCourse?stdId=${req.query.stdId as string}`,
             headers: {
                 "app-key": "txCR5732xYYWDGdd49M3R19o1OVwdRFc",
                 "x-access-token": token as string

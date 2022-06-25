@@ -19,6 +19,7 @@ import domtoimage from "dom-to-image";
 import ToastLoading from "components/Toasts/Loading";
 import toast from "react-hot-toast";
 import ToastSuccess from "components/Toasts/Success";
+import { LoginResponseInterface, User } from "interfaces/login.response.interface";
 
 const GridContainer = styled.div`
     display: grid;
@@ -40,14 +41,19 @@ const Index: React.FC = () => {
     >();
 
     const { isLive, isLoading } = useCheckSession();
+    const [user, setUser] = useLocalStorage<LoginResponseInterface | undefined>(
+        "user",
+        undefined
+    );
 
     const callAPI = async () => {
         let axiosWithTokenServiceFrontend = new AxiosWithTokenServiceFrontend(
             accesstoken!
         );
+
         let { data } =
             await axiosWithTokenServiceFrontend.axiosInstance.get<GroupCourseInterface>(
-                "/group-course?academicYear=2565&semester=1&stdId=224183"
+                `/group-course?stdId=${user!.user.student.stdId}`
             );
         setGroupCourse(data);
     };
