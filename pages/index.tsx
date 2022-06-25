@@ -49,6 +49,11 @@ const Index: React.FC = () => {
         undefined
     );
 
+    const [scale, setScale] = useLocalStorage<number>(
+        "scale_image_download",
+        1
+    );
+
     const callAPI = async () => {
         try {
             let axiosWithTokenServiceFrontend =
@@ -76,11 +81,18 @@ const Index: React.FC = () => {
         let toastKey = toast.custom((t) => (
             <ToastLoading message="Loading..." t={t} />
         ));
-        const dataUrl = await domtoimage.toPng(area.current as any);
+        const dataUrl = await domtoimage.toPng(area.current as any, {
+            width: area.current?.clientWidth! * scale,
+            height: area.current?.clientHeight! * scale,
+            style: {
+                transform: "scale(" + scale + ")",
+                transformOrigin: "top left",
+            },
+        });
         toast.custom((t) => <ToastSuccess message="สำเร็จ" t={t} />, {
             id: toastKey,
         });
-        saveAs(dataUrl, `kutable.png`);
+        saveAs(dataUrl, `kutable-${user?.user.student.stdId}.png`);
     };
 
     return (
@@ -91,6 +103,7 @@ const Index: React.FC = () => {
                         <div className="font-bold text-3xl hidden md:block py-3">
                             Schedule
                         </div>
+
                         <button
                             onClick={() => handleDownload()}
                             className="btn btn-sm btn-outline btn-success gap-2 w-full md:max-w-[9rem]"
@@ -98,6 +111,33 @@ const Index: React.FC = () => {
                             <FontAwesomeIcon icon={faDownload} size={"sm"} />
                             Save As PNG
                         </button>
+                    </div>
+                    <div className="flex justify-end">
+                        <div className="w-full md:max-w-[12rem]">
+                            <div>
+                                <label className="label">
+                                    <span className="label-text">
+                                        ปรับความละเอียดของรูปภาพ
+                                    </span>
+                                </label>
+                                <input
+                                    type="range"
+                                    min={1}
+                                    max={5}
+                                    defaultValue={scale}
+                                    className="range range-xs"
+                                    step={1}
+                                    onChange={(e) => setScale(Number.parseInt(e.target.value))}
+                                />
+                                <div className="w-full flex justify-between text-xs px-2">
+                                    <span>1</span>
+                                    <span>2</span>
+                                    <span>3</span>
+                                    <span>4</span>
+                                    <span>5</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="overflow-x-auto">
                         <div

@@ -17,7 +17,7 @@ const Navbar: React.FC<Props> = () => {
     return (
         <>
             <div className="bg-base-200">
-                <div className="max-w-3xl mx-auto navbar">
+                <div className="max-w-[70rem] mx-auto navbar">
                     <div className="navbar-start">
                         {isLive && (
                             <div className="dropdown">
