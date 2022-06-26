@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GroupCourseInterface } from "interfaces/group.course.interface";
 import React, { useState } from "react";
 import tw from "twin.macro";
+import { motion, AnimatePresence } from "framer-motion";
 import ChildGrid from "./ChildGrid";
 
 let time: { time: string; start: number; end?: number }[] = [
@@ -49,10 +50,6 @@ const checkTime = (time_from: string) => {
 
 const Detail = styled.div`
     ${tw`flex items-center gap-2 cursor-pointer select-none`}
-
-    :hover {
-        font-weight: 600;
-    }
 `;
 
 const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
@@ -77,7 +74,7 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                             </div>
                         </div>
                         <div
-                            className="flex flex-col duration-150"
+                            className="flex flex-col"
                             onClick={() => setIsEetexpand(!IsExpand)}
                         >
                             <Detail
@@ -86,9 +83,15 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                                 <FontAwesomeIcon icon={faBook} />{" "}
                                 {course.subject_name_th}
                             </Detail>
+                            <Detail
+                                className={`${!IsExpand ? "truncate" : ""}`}
+                            >
+                                <FontAwesomeIcon icon={faBook} />{" "}
+                                {course.subject_name_en}
+                            </Detail>
                         </div>
                         <div
-                            className="flex flex-col duration-150"
+                            className="flex flex-col"
                             onClick={() => setIsEetexpand(!IsExpand)}
                         >
                             <Detail
@@ -100,7 +103,6 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                             <Detail
                                 className={`${!IsExpand ? "truncate" : ""}`}
                             >
-                                <FontAwesomeIcon icon={faFlag} />{" "}
                                 {course.section_type_th === "บรรยาย" ? (
                                     <div className="badge bg-blue-400 text-white">
                                         {course.section_type_th}
@@ -109,8 +111,14 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                                     <div className="badge bg-orange-400 text-white">
                                         {course.section_type_th}
                                     </div>
-                                )} หมู่{" "}
-                                {course.section_code}
+                                )}
+                                <div className="badge bg-gray-400 text-white">
+                                    {course.std_status_th}
+                                </div>
+                                <div className="flex gap-1">
+                                    <div>หมู่</div>
+                                    <div>{course.section_code}</div>
+                                </div>
                             </Detail>
                         </div>
                     </ChildGrid>

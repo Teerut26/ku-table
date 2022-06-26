@@ -16,7 +16,7 @@ const ChildGrid: React.FC<Props> = ({ end, start, children, className }) => {
       }
     
     const ChildGrid = styled.div`
-        ${tw`p-1 md:p-3 col-span-2 min-h-16 duration-300`}
+        ${tw`p-1 md:p-3 col-span-2 min-h-16`}
         grid-column-start: ${start};
         grid-column-end: ${end};
         
