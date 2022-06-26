@@ -43,8 +43,7 @@ const Share: React.FC<Props> = ({ groupCourse, exists }) => {
         <>
             {exists ? (
                 <div className="flex flex-col gap-2 py-2 ">
-                    <div className="overflow-x-auto">
-                        <div className="rounded-lg w-[170rem] bg-base-100 mx-auto">
+                    <div className="overflow-x-auto w-[170rem]">
                             <GridContainer className="bg-base-200 divide-x">
                                 <ChildGrid>Day/Time</ChildGrid>
                                 <ChildGrid>8:00</ChildGrid>
@@ -72,7 +71,7 @@ const Share: React.FC<Props> = ({ groupCourse, exists }) => {
                                         MON
                                     </ChildGrid>
                                     <CoursesShare
-                                        className="bg-yellow-200 text-black"
+                                        className="border-l-[1.5rem] border-2 border-yellow-200 base-content"
                                         groupCourse={groupCourse!.course}
                                         day={"MON"}
                                     />
@@ -86,7 +85,7 @@ const Share: React.FC<Props> = ({ groupCourse, exists }) => {
                                         TUE
                                     </ChildGrid>
                                     <CoursesShare
-                                        className="bg-pink-400 text-black"
+                                        className="border-l-[1.5rem] border-2 border-pink-400 base-content"
                                         groupCourse={groupCourse!.course}
                                         day={"TUE"}
                                     />
@@ -100,7 +99,7 @@ const Share: React.FC<Props> = ({ groupCourse, exists }) => {
                                         WED
                                     </ChildGrid>
                                     <CoursesShare
-                                        className="bg-green-400 text-black"
+                                        className="border-l-[1.5rem] border-2 border-green-400 base-content"
                                         groupCourse={groupCourse!.course}
                                         day={"WED"}
                                     />
@@ -110,7 +109,7 @@ const Share: React.FC<Props> = ({ groupCourse, exists }) => {
                                         THU
                                     </ChildGrid>
                                     <CoursesShare
-                                        className="bg-orange-400 text-black"
+                                        className="border-l-[1.5rem] border-2 border-orange-400 base-content"
                                         groupCourse={groupCourse!.course}
                                         day={"THU"}
                                     />
@@ -120,7 +119,7 @@ const Share: React.FC<Props> = ({ groupCourse, exists }) => {
                                         FRI
                                     </ChildGrid>
                                     <CoursesShare
-                                        className="bg-blue-400 text-black"
+                                        className="border-l-[1.5rem] border-2 border-blue-400 base-content"
                                         groupCourse={groupCourse!.course}
                                         day={"FRI"}
                                     />
@@ -130,7 +129,7 @@ const Share: React.FC<Props> = ({ groupCourse, exists }) => {
                                         SAT
                                     </ChildGrid>
                                     <CoursesShare
-                                        className="bg-purple-500 text-black"
+                                        className="border-l-[1.5rem] border-2 border-purple-500 base-content"
                                         groupCourse={groupCourse!.course}
                                         day={"SAT"}
                                     />
@@ -140,14 +139,22 @@ const Share: React.FC<Props> = ({ groupCourse, exists }) => {
                                         SUN
                                     </ChildGrid>
                                     <CoursesShare
-                                        className="bg-red-400 text-black"
+                                        className="border-l-[1.5rem] border-2 border-red-400 base-content"
                                         groupCourse={groupCourse!.course}
                                         day={"SUN"}
                                     />
                                 </GridContainer>
                             </div>
+                            <div className="flex gap-3 text-2xl">
+                                สร้างโดย
+                                <a
+                                    className="text-blue-400"
+                                    href="https://ku-table2.vercel.app"
+                                >
+                                    ku-table2.vercel.app
+                                </a>
+                            </div>
                         </div>
-                    </div>
                 </div>
             ) : (
                 <div className="absolute top-0 bottom-0 right-0 left-0 flex justify-center items-center">

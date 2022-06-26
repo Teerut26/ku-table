@@ -1,8 +1,13 @@
+import { RootState } from "@/store/root";
 import styled from "@emotion/styled";
 import { faBook, faFlag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Course, GroupCourseInterface } from "interfaces/group.course.interface";
+import {
+    Course,
+    GroupCourseInterface,
+} from "interfaces/group.course.interface";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import tw from "twin.macro";
 import ChildGrid from "./ChildGrid";
 
@@ -57,6 +62,7 @@ const Detail = styled.div`
 
 const CoursesShare: React.FC<Props> = ({ groupCourse, day, className }) => {
     const [IsExpand, setIsEetexpand] = useState<boolean>(false);
+    const langRedux = useSelector((state: RootState) => state.langSlice.data);
     return (
         <>
             {groupCourse
@@ -64,46 +70,129 @@ const CoursesShare: React.FC<Props> = ({ groupCourse, day, className }) => {
                 .map((course, id) => (
                     <ChildGrid
                         key={id}
-                        className={`flex flex-col ${className} rounded-md`}
+                        className={`relative`}
                         start={checkTime(course.time_from).start}
                         end={checkTime(course.time_to).start}
                     >
-                        <div className="flex justify-between font-bold">
-                            <div className="truncate">
-                                {course.subject_code}
-                            </div>
-                            <div className="truncate">
-                                [{course.time_from} - {course.time_to}]
-                            </div>
+                        <div className="absolute left-0 -rotate-90 translate-y-3 -translate-x-[3px] text-black">
+                            {day}
                         </div>
                         <div
-                            className="flex flex-col duration-150"
-                            onClick={() => setIsEetexpand(!IsExpand)}
+                            className={`${className} flex flex-col rounded-md font-light p-3`}
                         >
-                            <Detail
-                                className={`${!IsExpand ? "truncate" : ""}`}
+                            <div className="flex justify-between font-normal">
+                                <div className="truncate">
+                                    {course.subject_code}
+                                </div>
+                                <div className="truncate">
+                                    [{course.time_from} - {course.time_to}]
+                                </div>
+                            </div>
+                            <div
+                                className="flex flex-col"
+                                onClick={() => setIsEetexpand(!IsExpand)}
                             >
-                                <FontAwesomeIcon icon={faBook} />{" "}
-                                {course.subject_name_th}
-                            </Detail>
-                        </div>
-                        <div
-                            className="flex flex-col duration-150"
-                            onClick={() => setIsEetexpand(!IsExpand)}
-                        >
-                            <Detail
-                                className={`${!IsExpand ? "truncate" : ""}`}
+                                <Detail
+                                    className={`${!IsExpand ? "truncate" : ""}`}
+                                >
+                                    {langRedux === "th"
+                                        ? course.subject_name_th
+                                        : course.subject_name_en}
+                                </Detail>
+                            </div>
+                            <div
+                                className="flex flex-col"
+                                onClick={() => setIsEetexpand(!IsExpand)}
                             >
-                                <FontAwesomeIcon icon={faFlag} />{" "}
-                                {course.room_name_th}
-                            </Detail>
-                            <Detail
-                                className={`${!IsExpand ? "truncate" : ""}`}
-                            >
-                                <FontAwesomeIcon icon={faFlag} />{" "}
-                                {course.section_type_th} หมู่{" "}
-                                {course.section_code}
-                            </Detail>
+                                <Detail
+                                    className={`${!IsExpand ? "truncate" : ""}`}
+                                >
+                                    <div className="font-bold">
+                                        {" "}
+                                        {langRedux === "th" ? "ห้อง" : "Room"}
+                                    </div>
+                                    {langRedux === "th"
+                                        ? course.room_name_th
+                                        : course.room_name_en}
+                                </Detail>
+                                {IsExpand && (
+                                    <>
+                                        <Detail>
+                                            <div className="font-bold text-now whitespace-nowrap">
+                                                {langRedux === "th"
+                                                    ? "อ.ผู้สอน"
+                                                    : "Teacher"}
+                                            </div>
+                                            <div>
+                                                {langRedux === "th" ? (
+                                                    <>
+                                                        {course.teacher_name
+                                                            .split(",")
+                                                            .map(
+                                                                (
+                                                                    teacher_name
+                                                                ) => (
+                                                                    <div>
+                                                                        {
+                                                                            teacher_name
+                                                                        }
+                                                                    </div>
+                                                                )
+                                                            )}
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        {course.teacher_name_en
+                                                            .split(",")
+                                                            .map(
+                                                                (
+                                                                    teacher_name_en
+                                                                ) => (
+                                                                    <div>
+                                                                        {
+                                                                            teacher_name_en
+                                                                        }
+                                                                    </div>
+                                                                )
+                                                            )}
+                                                    </>
+                                                )}
+                                            </div>
+                                        </Detail>
+                                        <div className="flex gap-1">
+                                            <div className="font-bold">
+                                                {langRedux === "th"
+                                                    ? "หมู่"
+                                                    : "Section "}
+                                            </div>
+                                            <div>{course.section_code}</div>
+                                        </div>
+                                    </>
+                                )}
+
+                                <Detail
+                                    className={`${!IsExpand ? "truncate" : ""}`}
+                                >
+                                    {course.section_type_th === "บรรยาย" ? (
+                                        <div className="badge bg-blue-400 text-white border-0">
+                                            {langRedux === "th"
+                                                ? course.section_type_th
+                                                : course.section_type_en}
+                                        </div>
+                                    ) : (
+                                        <div className="badge bg-orange-400 text-white border-0">
+                                            {langRedux === "th"
+                                                ? course.section_type_th
+                                                : course.section_type_en}
+                                        </div>
+                                    )}
+                                    <div className="badge bg-gray-400 text-white border-0">
+                                        {langRedux === "th"
+                                            ? course.std_status_th
+                                            : course.std_status_en}
+                                    </div>
+                                </Detail>
+                            </div>
                         </div>
                     </ChildGrid>
                 ))}
