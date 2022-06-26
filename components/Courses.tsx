@@ -116,19 +116,19 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                                 className={`${!IsExpand ? "truncate" : ""}`}
                             >
                                 {course.section_type_th === "บรรยาย" ? (
-                                    <div className="badge bg-blue-400 text-white">
+                                    <div className="badge bg-blue-400 text-white border-1">
                                         {langRedux === "th"
                                             ? course.section_type_th
                                             : course.section_type_en}
                                     </div>
                                 ) : (
-                                    <div className="badge bg-orange-400 text-white">
+                                    <div className="badge bg-orange-400 text-white border-1">
                                         {langRedux === "th"
                                             ? course.section_type_th
                                             : course.section_type_en}
                                     </div>
                                 )}
-                                <div className="badge bg-gray-400 text-white">
+                                <div className="badge bg-gray-400 text-white border-1">
                                     {langRedux === "th"
                                         ? course.std_status_th
                                         : course.std_status_en}
