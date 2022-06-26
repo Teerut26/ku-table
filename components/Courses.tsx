@@ -1,11 +1,13 @@
 import styled from "@emotion/styled";
-import { faBook, faFlag } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faFlag, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GroupCourseInterface } from "interfaces/group.course.interface";
 import React, { useState } from "react";
 import tw from "twin.macro";
 import { motion, AnimatePresence } from "framer-motion";
 import ChildGrid from "./ChildGrid";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/root";
 
 let time: { time: string; start: number; end?: number }[] = [
     { time: "8:00", start: 3 },
@@ -54,6 +56,7 @@ const Detail = styled.div`
 
 const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
     const [IsExpand, setIsEetexpand] = useState<boolean>(false);
+    const langRedux = useSelector((state: RootState) => state.langSlice.data);
     return (
         <>
             {groupCourse?.results[0].course
@@ -81,13 +84,9 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                                 className={`${!IsExpand ? "truncate" : ""}`}
                             >
                                 <FontAwesomeIcon icon={faBook} />{" "}
-                                {course.subject_name_th}
-                            </Detail>
-                            <Detail
-                                className={`${!IsExpand ? "truncate" : ""}`}
-                            >
-                                <FontAwesomeIcon icon={faBook} />{" "}
-                                {course.subject_name_en}
+                                {langRedux === "th"
+                                    ? course.subject_name_th
+                                    : course.subject_name_en}
                             </Detail>
                         </div>
                         <div
@@ -98,25 +97,48 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                                 className={`${!IsExpand ? "truncate" : ""}`}
                             >
                                 <FontAwesomeIcon icon={faFlag} />{" "}
-                                {course.room_name_th}
+                                {langRedux === "th"
+                                    ? course.room_name_th
+                                    : course.room_name_en}
                             </Detail>
+                            {IsExpand && (
+                                <Detail>
+                                    <FontAwesomeIcon icon={faUser} />
+                                    <div>
+                                        {langRedux === "th"
+                                            ? course.teacher_name
+                                            : course.teacher_name_en}
+                                    </div>
+                                </Detail>
+                            )}
+
                             <Detail
                                 className={`${!IsExpand ? "truncate" : ""}`}
                             >
                                 {course.section_type_th === "บรรยาย" ? (
                                     <div className="badge bg-blue-400 text-white">
-                                        {course.section_type_th}
+                                        {langRedux === "th"
+                                            ? course.section_type_th
+                                            : course.section_type_en}
                                     </div>
                                 ) : (
                                     <div className="badge bg-orange-400 text-white">
-                                        {course.section_type_th}
+                                        {langRedux === "th"
+                                            ? course.section_type_th
+                                            : course.section_type_en}
                                     </div>
                                 )}
                                 <div className="badge bg-gray-400 text-white">
-                                    {course.std_status_th}
+                                    {langRedux === "th"
+                                        ? course.std_status_th
+                                        : course.std_status_en}
                                 </div>
                                 <div className="flex gap-1">
-                                    <div>หมู่</div>
+                                    <div>
+                                        {langRedux === "th"
+                                            ? "หมู่"
+                                            : "Section "}
+                                    </div>
                                     <div>{course.section_code}</div>
                                 </div>
                             </Detail>
