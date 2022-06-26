@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { BsGithub } from 'react-icons/bs';
+import { BsGithub, BsInstagram } from "react-icons/bs";
 
 interface Props {}
 
@@ -13,12 +13,27 @@ const Footer: React.FC<Props> = () => {
             </div>
             <div className="text-center flex gap-2">
                 ได้รับแรงบันดาลใจมาจาก
-                <a className="text-blue-500" href="https://ku-table.vercel.app/">ku-table</a>
+                <a
+                    className="text-blue-500"
+                    href="https://ku-table.vercel.app/"
+                >
+                    ku-table
+                </a>
             </div>
-            <a href="https://github.com/Teerut26/ku-table" className="text-center flex items-center gap-2 my-5">
-                <BsGithub size={30} />
-                <div className="text-xl">Github</div>
-            </a>
+            <div className="flex gap-5">
+                <a
+                    href="https://github.com/Teerut26/ku-table"
+                    className="text-center flex items-center gap-2 my-5"
+                >
+                    <BsGithub size={40} />
+                </a>
+                <a
+                    href="https://www.instagram.com/teerut_1t/"
+                    className="text-center flex items-center gap-2 my-5"
+                >
+                    <BsInstagram size={40} />
+                </a>
+            </div>
         </div>
     );
 };
