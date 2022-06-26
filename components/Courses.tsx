@@ -83,7 +83,7 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                             <Detail
                                 className={`${!IsExpand ? "truncate" : ""}`}
                             >
-                                <FontAwesomeIcon icon={faBook} />{" "}
+                                <div>-</div>
                                 {langRedux === "th"
                                     ? course.subject_name_th
                                     : course.subject_name_en}
@@ -96,14 +96,14 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                             <Detail
                                 className={`${!IsExpand ? "truncate" : ""}`}
                             >
-                                <FontAwesomeIcon icon={faFlag} />{" "}
+                                <div>-</div>
                                 {langRedux === "th"
                                     ? course.room_name_th
                                     : course.room_name_en}
                             </Detail>
                             {IsExpand && (
                                 <Detail>
-                                    <FontAwesomeIcon icon={faUser} />
+                                    <div>-</div>
                                     <div>
                                         {langRedux === "th"
                                             ? course.teacher_name
