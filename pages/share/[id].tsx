@@ -15,7 +15,7 @@ import CheckLogin from "layouts/CheckLogin";
 import WithNavbar from "layouts/WithNavbar";
 import { NextPageContext } from "next";
 import { AppContext } from "next/app";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import tw from "twin.macro";
 import domtoimage from "dom-to-image";
@@ -72,6 +72,13 @@ const Share: React.FC<Props> = ({ groupCourse, exists, id }) => {
         saveAs(dataUrl, `kutable-${id}.png`);
     };
 
+    useEffect(() => {
+        if (area.current) {
+            area.current.clientWidth = area.current.clientWidth * 5;
+            area.current.clientWidth = area.current.clientHeight * 5;
+        }
+    }, [area]);
+
     return (
         <>
             {exists ? (
@@ -115,7 +122,7 @@ const Share: React.FC<Props> = ({ groupCourse, exists, id }) => {
                         <div className="overflow-x-auto overflow-y-hidden">
                             <div
                                 ref={area}
-                                className="rounded-lg w-[170rem] bg-base-100 mx-auto"
+                                className="rounded-lg w-[170rem] bg-base-100 mx-auto "
                             >
                                 <GridContainer className="bg-base-200 divide-x">
                                     <ChildGrid>Day/Time</ChildGrid>
