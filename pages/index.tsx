@@ -211,7 +211,7 @@ const Index: React.FC = () => {
                                         MON
                                     </ChildGrid>
                                     <Courses
-                                        className="bg-yellow-200 text-black"
+                                        className="border-l-[1.5rem] border-2 border-yellow-200 base-content"
                                         groupCourse={groupCourse!}
                                         day={"MON"}
                                     />
@@ -225,7 +225,7 @@ const Index: React.FC = () => {
                                         TUE
                                     </ChildGrid>
                                     <Courses
-                                        className="bg-pink-400 text-black"
+                                        className="border-l-[1.5rem] border-2 border-pink-400 base-content"
                                         groupCourse={groupCourse!}
                                         day={"TUE"}
                                     />
@@ -239,7 +239,7 @@ const Index: React.FC = () => {
                                         WED
                                     </ChildGrid>
                                     <Courses
-                                        className="bg-green-400 text-black"
+                                        className="border-l-[1.5rem] border-2 border-green-400 base-content"
                                         groupCourse={groupCourse!}
                                         day={"WED"}
                                     />
@@ -249,7 +249,7 @@ const Index: React.FC = () => {
                                         THU
                                     </ChildGrid>
                                     <Courses
-                                        className="bg-orange-400 text-black"
+                                        className="border-l-[1.5rem] border-2 border-orange-400 base-content"
                                         groupCourse={groupCourse!}
                                         day={"THU"}
                                     />
@@ -259,7 +259,7 @@ const Index: React.FC = () => {
                                         FRI
                                     </ChildGrid>
                                     <Courses
-                                        className="bg-blue-400 text-black"
+                                        className="border-l-[1.5rem] border-2 border-blue-400 base-content"
                                         groupCourse={groupCourse!}
                                         day={"FRI"}
                                     />
@@ -269,7 +269,7 @@ const Index: React.FC = () => {
                                         SAT
                                     </ChildGrid>
                                     <Courses
-                                        className="bg-purple-500 text-black"
+                                        className="border-l-[1.5rem] border-2 border-purple-500 base-content"
                                         groupCourse={groupCourse!}
                                         day={"SAT"}
                                     />
@@ -279,7 +279,7 @@ const Index: React.FC = () => {
                                         SUN
                                     </ChildGrid>
                                     <Courses
-                                        className="bg-red-400 text-black"
+                                        className="border-l-[1.5rem] border-2 border-red-400 base-content"
                                         groupCourse={groupCourse!}
                                         day={"SUN"}
                                     />
