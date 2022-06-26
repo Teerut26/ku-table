@@ -36,9 +36,7 @@ const Login: React.FC<Props> = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        let toastKey = toast.custom((t) => (
-            <ToastLoading message="Loading..." t={t} />
-        ));
+        let toastKey = toast.loading("Loading...");
 
         try {
             if (!username.current || !password.current) {
@@ -60,15 +58,13 @@ const Login: React.FC<Props> = () => {
             setUser(data);
             let imageBaseUrl = await getImageProfile(data.accesstoken);
             setImageProfile(imageBaseUrl);
-            toast.custom(
-                (t) => <ToastSuccess message="เข้าสู่ระบบสำเร็จ" t={t} />,
-                {
-                    id: toastKey,
-                }
-            );
+            toast.success("เข้าสู่ระบบสำเร็จ", {
+                id: toastKey,
+            });
+
             window.location.href = "/";
         } catch (error) {
-            toast.custom((t) => <ToastError message="Login Failed" t={t} />, {
+            toast.success("Login Failed", {
                 id: toastKey,
             });
         }

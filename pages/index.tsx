@@ -80,9 +80,7 @@ const Index: React.FC = () => {
     const [Iscapture, setIscapture] = useState<boolean>(false);
 
     const handleDownload = async () => {
-        let toastKey = toast.custom((t) => (
-            <ToastLoading message="Loading..." t={t} />
-        ));
+        let toastKey = toast.loading("กำลังสร้างรูปภาพของคุณ...");
 
         setIscapture(true);
 
@@ -95,7 +93,7 @@ const Index: React.FC = () => {
                     transformOrigin: "top left",
                 },
             });
-            toast.custom((t) => <ToastSuccess message="สำเร็จ" t={t} />, {
+            toast.success("สำเร็จ", {
                 id: toastKey,
             });
             saveAs(dataUrl, `kutable-${user?.user.student.stdId}.png`);
@@ -104,6 +102,7 @@ const Index: React.FC = () => {
     };
 
     const callCreateLink = async () => {
+        let toastKey = toast.loading("กำลังสร้างลิงค์ของคุณ...");
         let axiosWithTokenServiceFrontend = new AxiosWithTokenServiceFrontend(
             accesstoken!
         );
@@ -113,8 +112,12 @@ const Index: React.FC = () => {
                 data: JSON.stringify(groupCourse?.results[0]),
             }
         );
-        navigator.clipboard.writeText(`${window.location.href}share/${data.id}`)
-        toast.custom((t) => <ToastSuccess message="คัดลอกสำเร็จ" t={t} />);
+        navigator.clipboard.writeText(
+            `${window.location.href}share/${data.id}`
+        );
+        toast.success("คัดลอกแล้ว", {
+            id: toastKey,
+        });
     };
 
     return (
