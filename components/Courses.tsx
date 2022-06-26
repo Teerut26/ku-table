@@ -101,7 +101,15 @@ const Courses: React.FC<Props> = ({ groupCourse, day, className }) => {
                                 className={`${!IsExpand ? "truncate" : ""}`}
                             >
                                 <FontAwesomeIcon icon={faFlag} />{" "}
-                                {course.section_type_th} หมู่{" "}
+                                {course.section_type_th === "บรรยาย" ? (
+                                    <div className="badge bg-blue-400 text-white">
+                                        {course.section_type_th}
+                                    </div>
+                                ) : (
+                                    <div className="badge bg-orange-400 text-white">
+                                        {course.section_type_th}
+                                    </div>
+                                )} หมู่{" "}
                                 {course.section_code}
                             </Detail>
                         </div>
