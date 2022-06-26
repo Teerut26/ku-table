@@ -3,6 +3,7 @@ import useCheckSession from "hooks/useCheckSession";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
+import ChangeLang from "./ChangeLang";
 import ChangeTheme from "./ChangeTheme";
 
 interface Props {}
@@ -57,11 +58,16 @@ const Navbar: React.FC<Props> = () => {
                                 </ul>
                             </div>
                         )}
+                       <ChangeLang />
                     </div>
                     <Link href={"/"}>
                         <div className="navbar-center">
                             <a className="normal-case text-xl flex justify-center items-center font-bold gap-2">
-                                <img src="/logo.svg" className="w-10 drop-shadow-md" alt="" />{" "}
+                                <img
+                                    src="/logo.svg"
+                                    className="w-10 drop-shadow-md"
+                                    alt=""
+                                />{" "}
                                 KU Table 2
                             </a>
                         </div>
