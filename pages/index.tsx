@@ -120,6 +120,8 @@ const Index: React.FC = () => {
         });
     };
 
+    const day = "font-bold text-2xl flex justify-center items-center";
+
     return (
         <CheckLogin>
             <WithNavbar>
@@ -187,28 +189,58 @@ const Index: React.FC = () => {
                             ref={area}
                             className="rounded-lg w-[170rem] bg-base-100 mx-auto"
                         >
-                            <GridContainer className="bg-base-200 divide-x">
-                                <ChildGrid>Day/Time</ChildGrid>
-                                <ChildGrid>8:00</ChildGrid>
-                                <ChildGrid>9:00</ChildGrid>
-                                <ChildGrid>10:00</ChildGrid>
-                                <ChildGrid>11:00</ChildGrid>
-                                <ChildGrid>12:00</ChildGrid>
-                                <ChildGrid>13:00</ChildGrid>
-                                <ChildGrid>14:00</ChildGrid>
-                                <ChildGrid>15:00</ChildGrid>
-                                <ChildGrid>16:00</ChildGrid>
-                                <ChildGrid>17:00</ChildGrid>
-                                <ChildGrid>18:00</ChildGrid>
-                                <ChildGrid>19:00</ChildGrid>
-                                <ChildGrid>20:00</ChildGrid>
-                                <ChildGrid>21:00</ChildGrid>
+                            <GridContainer className="bg-base-200 divide-x font-bold text-2xl">
+                                <ChildGrid className="flex justify-center items-center">
+                                    Day/Time
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    8:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    9:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    10:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    11:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    12:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    13:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    14:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    15:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    16:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    17:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    18:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    19:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    20:00
+                                </ChildGrid>
+                                <ChildGrid className="flex justify-center items-center">
+                                    21:00
+                                </ChildGrid>
                             </GridContainer>
                             <div>
                                 <GridContainer>
                                     <ChildGrid
                                         className={css(
-                                            tw`hover bg-yellow-200 text-black`
+                                            tw`hover bg-yellow-200 text-black ${day}`
                                         )}
                                     >
                                         MON
@@ -222,7 +254,7 @@ const Index: React.FC = () => {
                                 <GridContainer>
                                     <ChildGrid
                                         className={css(
-                                            tw`hover bg-pink-400 text-black`
+                                            tw`hover bg-pink-400 text-black ${day}`
                                         )}
                                     >
                                         TUE
@@ -236,7 +268,7 @@ const Index: React.FC = () => {
                                 <GridContainer>
                                     <ChildGrid
                                         className={css(
-                                            tw`hover bg-green-400 text-black`
+                                            tw`hover bg-green-400 text-black ${day}`
                                         )}
                                     >
                                         WED
@@ -248,7 +280,12 @@ const Index: React.FC = () => {
                                     />
                                 </GridContainer>
                                 <GridContainer>
-                                    <ChildGrid className="hover bg-orange-400 text-black">
+                                    <ChildGrid
+                                        className={
+                                            "bg-orange-400 " +
+                                            css(tw`hover text-black ${day}`)
+                                        }
+                                    >
                                         THU
                                     </ChildGrid>
                                     <Courses
@@ -258,7 +295,12 @@ const Index: React.FC = () => {
                                     />
                                 </GridContainer>
                                 <GridContainer>
-                                    <ChildGrid className="hover bg-blue-400 text-black">
+                                    <ChildGrid
+                                        className={
+                                            "bg-blue-400 " +
+                                            css(tw`hover text-black ${day}`)
+                                        }
+                                    >
                                         FRI
                                     </ChildGrid>
                                     <Courses
@@ -268,7 +310,12 @@ const Index: React.FC = () => {
                                     />
                                 </GridContainer>
                                 <GridContainer>
-                                    <ChildGrid className="hover bg-purple-500 text-black">
+                                    <ChildGrid
+                                        className={
+                                            "bg-purple-500 " +
+                                            css(tw`hover text-black ${day}`)
+                                        }
+                                    >
                                         SAT
                                     </ChildGrid>
                                     <Courses
@@ -278,7 +325,12 @@ const Index: React.FC = () => {
                                     />
                                 </GridContainer>
                                 <GridContainer>
-                                    <ChildGrid className="hover bg-red-400 text-black">
+                                    <ChildGrid
+                                        className={
+                                            "bg-red-400 " +
+                                            css(tw`hover text-black ${day}`)
+                                        }
+                                    >
                                         SUN
                                     </ChildGrid>
                                     <Courses
