@@ -64,7 +64,7 @@ const Login: React.FC<Props> = () => {
 
             window.location.href = "/";
         } catch (error) {
-            toast.success("Login Failed", {
+            toast.error("Login Failed", {
                 id: toastKey,
             });
         }
