@@ -19,7 +19,7 @@ export default function Document() {
                 />
                 <meta
                     property="og:image"
-                    content="https://firebasestorage.googleapis.com/v0/b/ku-table.appspot.com/o/image%2Fkutable-726bfa0e-a48a-4ec2-a55a-8f10bc2b4a9a.png?alt=media&token=68336326-152f-4700-9e15-7cd89ffe0c80"
+                    content="https://ku-cs.com/wp-content/uploads/2022/07/Ku-Table-Seo65.png"
                 />
                 <meta property="twitter:card" content="summary_large_image" />
                 <meta
@@ -33,7 +33,7 @@ export default function Document() {
                 />
                 <meta
                     property="twitter:image"
-                    content="https://firebasestorage.googleapis.com/v0/b/ku-table.appspot.com/o/image%2Fkutable-726bfa0e-a48a-4ec2-a55a-8f10bc2b4a9a.png?alt=media&token=68336326-152f-4700-9e15-7cd89ffe0c80"
+                    content="https://ku-cs.com/wp-content/uploads/2022/07/Ku-Table-Seo65.png"
                 />
                 <link rel="icon" href="/logo.svg" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
