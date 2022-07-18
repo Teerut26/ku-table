@@ -22,7 +22,7 @@ const Footer: React.FC<Props> = () => {
             </div>
             <div className="flex gap-5">
                 <a
-                    href="https://github.com/Teerut26/ku-table"
+                    href="https://github.com/kucs37/ku-table"
                     className="text-center flex items-center gap-2 my-5"
                 >
                     <BsGithub size={40} />
