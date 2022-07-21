@@ -1,5 +1,8 @@
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 import useCheckSession from "hooks/useCheckSession";
+import { LoginResponseInterface } from "interfaces/login.response.interface";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
@@ -11,8 +14,14 @@ interface Props {}
 const Navbar: React.FC<Props> = () => {
     const [ShowExpain, setShowExpain] = useState<boolean>(false);
     const { logout, isLive } = useCheckSession();
+
     const [ImageProfile, setImageProfile] = useLocalStorage<string | undefined>(
         "image_url",
+        undefined
+    );
+
+    const [user] = useLocalStorage<LoginResponseInterface | undefined>(
+        "user",
         undefined
     );
     return (
@@ -93,6 +102,14 @@ const Navbar: React.FC<Props> = () => {
                                         tabIndex={0}
                                         className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-200 rounded-box w-52"
                                     >
+                                        <li>
+                                            <div className="flex gap-2">
+                                                <FontAwesomeIcon icon={faUser} className="w-5" />
+                                                <div className="flex gap-2">
+                                                    <div>{user?.user.firstNameTh}</div>
+                                                </div>
+                                            </div>
+                                        </li>
                                         <li onClick={() => logout()}>
                                             <a>ออกจากระบบ</a>
                                         </li>
