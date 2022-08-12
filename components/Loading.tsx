@@ -14,7 +14,7 @@ const Loading: React.FC<Props> = () => {
                 <Player
                     autoplay
                     loop
-                    src="https://assets7.lottiefiles.com/packages/lf20_xtwyqv2j.json"
+                    src="/lf20_xtwyqv2j.json"
                     style={{ height: "200px", width: "200px" }}
                 />
                 <div className="text-primary-content font-bold text-xl">
