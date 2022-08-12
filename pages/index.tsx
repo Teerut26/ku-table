@@ -19,6 +19,8 @@ import toast from "react-hot-toast";
 import { LoginResponseInterface } from "interfaces/login.response.interface";
 
 import { browserName } from "react-device-detect";
+import Loading from "components/Loading";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const GridContainer = styled.div`
     display: grid;
@@ -31,7 +33,6 @@ const Index: React.FC = () => {
         "accesstoken",
         undefined
     );
-    const [Loading, setLoading] = useState<boolean>(false);
 
     const area = useRef<HTMLDivElement>(null);
 
@@ -121,237 +122,260 @@ const Index: React.FC = () => {
     return (
         <CheckLogin>
             <WithNavbar>
-                <div className="flex flex-col gap-2 py-2 ">
-                    <div className="flex justify-between items-center max-w-[105rem] mx-auto w-full">
-                        <div className="font-bold text-3xl hidden md:block py-3">
-                            Schedule
-                        </div>
-                        <div className="flex gap-2">
-                            <button
-                                onClick={() => handleDownload()}
-                                className="btn btn-sm btn-outline btn-success gap-2 "
-                            >
-                                <FontAwesomeIcon
-                                    icon={faDownload}
-                                    size={"sm"}
-                                />
-                                Save As PNG
-                            </button>
-                            <button
-                                onClick={() => callCreateLink()}
-                                className="btn btn-sm btn-outline btn-primary gap-2 "
-                            >
-                                <FontAwesomeIcon icon={faShare} size={"sm"} />
-                                แชร์ตาราง
-                            </button>
-                        </div>
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <div className="hidden md:block font-bold text-xl">
-                            {groupCourse?.results[0].peroid_date}
-                        </div>
-                        <div className="w-full md:max-w-[12rem]">
-                            {browserName === "Chrome" && (
-                                <div>
-                                    <label className="label">
-                                        <span className="label-text">
-                                            ปรับความละเอียดของรูปภาพ
-                                        </span>
-                                    </label>
-                                    <input
-                                        type="range"
-                                        min={1}
-                                        max={5}
-                                        defaultValue={scale}
-                                        className="range range-xs"
-                                        step={1}
-                                        onChange={(e) =>
-                                            setScale(
-                                                Number.parseInt(e.target.value)
-                                            )
-                                        }
-                                    />
-                                    <div className="w-full flex justify-between text-xs px-2">
-                                        <span>1</span>
-                                        <span>2</span>
-                                        <span>3</span>
-                                        <span>4</span>
-                                        <span>5</span>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                    <div className="overflow-x-auto">
-                        <div
-                            ref={area}
-                            className="rounded-lg w-[170rem] bg-base-100 mx-auto"
-                        >
-                            <GridContainer className="bg-base-200 divide-x font-bold text-2xl">
-                                <ChildGrid className="flex justify-center items-center">
-                                    Day/Time
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    8:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    9:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    10:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    11:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    12:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    13:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    14:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    15:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    16:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    17:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    18:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    19:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    20:00
-                                </ChildGrid>
-                                <ChildGrid className="flex justify-center items-center">
-                                    21:00
-                                </ChildGrid>
-                            </GridContainer>
-                            <div>
-                                <GridContainer>
-                                    <ChildGrid
-                                        className={css(
-                                            tw`hover bg-yellow-200 text-black ${day}`
-                                        )}
-                                    >
-                                        MON
-                                    </ChildGrid>
-                                    <Courses
-                                        className="border-l-[1.5rem] border-2 border-yellow-200 base-content"
-                                        groupCourse={groupCourse!}
-                                        day={"MON"}
-                                    />
-                                </GridContainer>
-                                <GridContainer>
-                                    <ChildGrid
-                                        className={css(
-                                            tw`hover bg-pink-400 text-black ${day}`
-                                        )}
-                                    >
-                                        TUE
-                                    </ChildGrid>
-                                    <Courses
-                                        className="border-l-[1.5rem] border-2 border-pink-400 base-content"
-                                        groupCourse={groupCourse!}
-                                        day={"TUE"}
-                                    />
-                                </GridContainer>
-                                <GridContainer>
-                                    <ChildGrid
-                                        className={css(
-                                            tw`hover bg-green-400 text-black ${day}`
-                                        )}
-                                    >
-                                        WED
-                                    </ChildGrid>
-                                    <Courses
-                                        className="border-l-[1.5rem] border-2 border-green-400 base-content"
-                                        groupCourse={groupCourse!}
-                                        day={"WED"}
-                                    />
-                                </GridContainer>
-                                <GridContainer>
-                                    <ChildGrid
-                                        className={
-                                            "bg-orange-400 " +
-                                            css(tw`hover text-black ${day}`)
-                                        }
-                                    >
-                                        THU
-                                    </ChildGrid>
-                                    <Courses
-                                        className="border-l-[1.5rem] border-2 border-orange-400 base-content"
-                                        groupCourse={groupCourse!}
-                                        day={"THU"}
-                                    />
-                                </GridContainer>
-                                <GridContainer>
-                                    <ChildGrid
-                                        className={
-                                            "bg-blue-400 " +
-                                            css(tw`hover text-black ${day}`)
-                                        }
-                                    >
-                                        FRI
-                                    </ChildGrid>
-                                    <Courses
-                                        className="border-l-[1.5rem] border-2 border-blue-400 base-content"
-                                        groupCourse={groupCourse!}
-                                        day={"FRI"}
-                                    />
-                                </GridContainer>
-                                <GridContainer>
-                                    <ChildGrid
-                                        className={
-                                            "bg-purple-500 " +
-                                            css(tw`hover text-black ${day}`)
-                                        }
-                                    >
-                                        SAT
-                                    </ChildGrid>
-                                    <Courses
-                                        className="border-l-[1.5rem] border-2 border-purple-500 base-content"
-                                        groupCourse={groupCourse!}
-                                        day={"SAT"}
-                                    />
-                                </GridContainer>
-                                <GridContainer>
-                                    <ChildGrid
-                                        className={
-                                            "bg-red-400 " +
-                                            css(tw`hover text-black ${day}`)
-                                        }
-                                    >
-                                        SUN
-                                    </ChildGrid>
-                                    <Courses
-                                        className="border-l-[1.5rem] border-2 border-red-400 base-content"
-                                        groupCourse={groupCourse!}
-                                        day={"SUN"}
-                                    />
-                                </GridContainer>
+                {groupCourse ? (
+                    <div className="flex flex-col gap-2 py-2 ">
+                        <div className="flex justify-between items-center max-w-[105rem] mx-auto w-full">
+                            <div className="font-bold text-3xl hidden md:block py-3">
+                                Schedule
                             </div>
-                            {Iscapture && (
-                                <div className="flex gap-3 text-2xl">
-                                    สร้างโดย
-                                    <a
-                                        className="text-blue-400"
-                                        href="https://ku-table2.vercel.app"
-                                    >
-                                        ku-table2.vercel.app
-                                    </a>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => handleDownload()}
+                                    className="btn btn-sm btn-outline btn-success gap-2 "
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faDownload}
+                                        size={"sm"}
+                                    />
+                                    Save As PNG
+                                </button>
+                                <button
+                                    onClick={() => callCreateLink()}
+                                    className="btn btn-sm btn-outline btn-primary gap-2 "
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faShare}
+                                        size={"sm"}
+                                    />
+                                    แชร์ตาราง
+                                </button>
+                            </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <div className="hidden md:block font-bold text-xl">
+                                {groupCourse?.results[0].peroid_date}
+                            </div>
+                            <div className="w-full md:max-w-[12rem]">
+                                {browserName === "Chrome" && (
+                                    <div>
+                                        <label className="label">
+                                            <span className="label-text">
+                                                ปรับความละเอียดของรูปภาพ
+                                            </span>
+                                        </label>
+                                        <input
+                                            type="range"
+                                            min={1}
+                                            max={5}
+                                            defaultValue={scale}
+                                            className="range range-xs"
+                                            step={1}
+                                            onChange={(e) =>
+                                                setScale(
+                                                    Number.parseInt(
+                                                        e.target.value
+                                                    )
+                                                )
+                                            }
+                                        />
+                                        <div className="w-full flex justify-between text-xs px-2">
+                                            <span>1</span>
+                                            <span>2</span>
+                                            <span>3</span>
+                                            <span>4</span>
+                                            <span>5</span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div className="overflow-x-auto">
+                            <div
+                                ref={area}
+                                className="rounded-lg w-[170rem] bg-base-100 mx-auto"
+                            >
+                                <GridContainer className="bg-base-200 divide-x font-bold text-2xl">
+                                    <ChildGrid className="flex justify-center items-center">
+                                        Day/Time
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        8:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        9:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        10:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        11:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        12:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        13:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        14:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        15:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        16:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        17:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        18:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        19:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        20:00
+                                    </ChildGrid>
+                                    <ChildGrid className="flex justify-center items-center">
+                                        21:00
+                                    </ChildGrid>
+                                </GridContainer>
+                                <div>
+                                    <GridContainer>
+                                        <ChildGrid
+                                            className={css(
+                                                tw`hover bg-yellow-200 text-black ${day}`
+                                            )}
+                                        >
+                                            MON
+                                        </ChildGrid>
+                                        <Courses
+                                            className="border-l-[1.5rem] border-2 border-yellow-200 base-content"
+                                            groupCourse={groupCourse!}
+                                            day={"MON"}
+                                        />
+                                    </GridContainer>
+                                    <GridContainer>
+                                        <ChildGrid
+                                            className={css(
+                                                tw`hover bg-pink-400 text-black ${day}`
+                                            )}
+                                        >
+                                            TUE
+                                        </ChildGrid>
+                                        <Courses
+                                            className="border-l-[1.5rem] border-2 border-pink-400 base-content"
+                                            groupCourse={groupCourse!}
+                                            day={"TUE"}
+                                        />
+                                    </GridContainer>
+                                    <GridContainer>
+                                        <ChildGrid
+                                            className={css(
+                                                tw`hover bg-green-400 text-black ${day}`
+                                            )}
+                                        >
+                                            WED
+                                        </ChildGrid>
+                                        <Courses
+                                            className="border-l-[1.5rem] border-2 border-green-400 base-content"
+                                            groupCourse={groupCourse!}
+                                            day={"WED"}
+                                        />
+                                    </GridContainer>
+                                    <GridContainer>
+                                        <ChildGrid
+                                            className={
+                                                "bg-orange-400 " +
+                                                css(tw`hover text-black ${day}`)
+                                            }
+                                        >
+                                            THU
+                                        </ChildGrid>
+                                        <Courses
+                                            className="border-l-[1.5rem] border-2 border-orange-400 base-content"
+                                            groupCourse={groupCourse!}
+                                            day={"THU"}
+                                        />
+                                    </GridContainer>
+                                    <GridContainer>
+                                        <ChildGrid
+                                            className={
+                                                "bg-blue-400 " +
+                                                css(tw`hover text-black ${day}`)
+                                            }
+                                        >
+                                            FRI
+                                        </ChildGrid>
+                                        <Courses
+                                            className="border-l-[1.5rem] border-2 border-blue-400 base-content"
+                                            groupCourse={groupCourse!}
+                                            day={"FRI"}
+                                        />
+                                    </GridContainer>
+                                    <GridContainer>
+                                        <ChildGrid
+                                            className={
+                                                "bg-purple-500 " +
+                                                css(tw`hover text-black ${day}`)
+                                            }
+                                        >
+                                            SAT
+                                        </ChildGrid>
+                                        <Courses
+                                            className="border-l-[1.5rem] border-2 border-purple-500 base-content"
+                                            groupCourse={groupCourse!}
+                                            day={"SAT"}
+                                        />
+                                    </GridContainer>
+                                    <GridContainer>
+                                        <ChildGrid
+                                            className={
+                                                "bg-red-400 " +
+                                                css(tw`hover text-black ${day}`)
+                                            }
+                                        >
+                                            SUN
+                                        </ChildGrid>
+                                        <Courses
+                                            className="border-l-[1.5rem] border-2 border-red-400 base-content"
+                                            groupCourse={groupCourse!}
+                                            day={"SUN"}
+                                        />
+                                    </GridContainer>
                                 </div>
-                            )}
+                                {Iscapture && (
+                                    <div className="flex gap-3 text-2xl">
+                                        สร้างโดย
+                                        <a
+                                            className="text-blue-400"
+                                            href="https://ku-table2.vercel.app"
+                                        >
+                                            ku-table2.vercel.app
+                                        </a>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
+                ) : (
+                    <div className="h-[80vh] relative">
+                        <div className="absolute top-0 bottom-0 right-0 left-0 flex flex-col justify-center items-center">
+                            <div className="flex flex-col items-center ">
+                                <Player
+                                    autoplay
+                                    loop
+                                    src="https://assets7.lottiefiles.com/packages/lf20_xtwyqv2j.json"
+                                    style={{ height: "200px", width: "200px" }}
+                                />
+                                <div className="text-primary-content font-bold text-xl">
+                                    กำลังดึงข้อมูล...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </WithNavbar>
         </CheckLogin>
     );

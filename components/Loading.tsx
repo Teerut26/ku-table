@@ -5,7 +5,7 @@ import tw from "twin.macro";
 
 interface Props {}
 
-const Container = styled.div(tw`absolute top-0 bottom-0 right-0 left-0 flex flex-col justify-center items-center`)
+const Container = styled.div(tw`absolute z-50 top-0 bottom-0 right-0 left-0 flex flex-col justify-center items-center`)
 
 const Loading: React.FC<Props> = () => {
     return (
