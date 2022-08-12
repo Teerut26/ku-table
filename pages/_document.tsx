@@ -35,7 +35,7 @@ export default function Document() {
                     property="twitter:image"
                     content="https://ku-cs.com/wp-content/uploads/2022/07/Ku-Table-Seo65.png"
                 />
-                <link rel="icon" href="/logo.svg" />
+                <link rel="icon" href="/logo.png" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link
                     rel="preconnect"

@@ -73,7 +73,7 @@ const Navbar: React.FC<Props> = () => {
                         <div className="navbar-center">
                             <a className="normal-case text-xl flex justify-center items-center font-bold gap-2">
                                 <img
-                                    src="/logo.svg"
+                                    src="/logo.png"
                                     className="w-10 drop-shadow-md"
                                     alt=""
                                 />{" "}
