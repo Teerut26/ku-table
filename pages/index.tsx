@@ -6,7 +6,6 @@ import { GroupCourseInterface } from "interfaces/group.course.interface";
 import CheckLogin from "layouts/CheckLogin";
 import WithNavbar from "layouts/WithNavbar";
 import React, { useEffect, useRef, useState } from "react";
-import AxiosServiceFrontend from "services/frontend/axios.service";
 import AxiosWithTokenServiceFrontend from "services/frontend/axios.with.token.service";
 import tw from "twin.macro";
 import "twin.macro";
@@ -16,13 +15,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faShare } from "@fortawesome/free-solid-svg-icons";
 import { saveAs } from "file-saver";
 import domtoimage from "dom-to-image";
-import ToastLoading from "components/Toasts/Loading";
 import toast from "react-hot-toast";
-import ToastSuccess from "components/Toasts/Success";
-import {
-    LoginResponseInterface,
-    User,
-} from "interfaces/login.response.interface";
+import { LoginResponseInterface } from "interfaces/login.response.interface";
+
+import { browserName } from "react-device-detect";
 
 const GridContainer = styled.div`
     display: grid;
@@ -155,33 +151,35 @@ const Index: React.FC = () => {
                             {groupCourse?.results[0].peroid_date}
                         </div>
                         <div className="w-full md:max-w-[12rem]">
-                            <div>
-                                <label className="label">
-                                    <span className="label-text">
-                                        ปรับความละเอียดของรูปภาพ
-                                    </span>
-                                </label>
-                                <input
-                                    type="range"
-                                    min={1}
-                                    max={5}
-                                    defaultValue={scale}
-                                    className="range range-xs"
-                                    step={1}
-                                    onChange={(e) =>
-                                        setScale(
-                                            Number.parseInt(e.target.value)
-                                        )
-                                    }
-                                />
-                                <div className="w-full flex justify-between text-xs px-2">
-                                    <span>1</span>
-                                    <span>2</span>
-                                    <span>3</span>
-                                    <span>4</span>
-                                    <span>5</span>
+                            {browserName === "Chrome" && (
+                                <div>
+                                    <label className="label">
+                                        <span className="label-text">
+                                            ปรับความละเอียดของรูปภาพ
+                                        </span>
+                                    </label>
+                                    <input
+                                        type="range"
+                                        min={1}
+                                        max={5}
+                                        defaultValue={scale}
+                                        className="range range-xs"
+                                        step={1}
+                                        onChange={(e) =>
+                                            setScale(
+                                                Number.parseInt(e.target.value)
+                                            )
+                                        }
+                                    />
+                                    <div className="w-full flex justify-between text-xs px-2">
+                                        <span>1</span>
+                                        <span>2</span>
+                                        <span>3</span>
+                                        <span>4</span>
+                                        <span>5</span>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                     <div className="overflow-x-auto">
