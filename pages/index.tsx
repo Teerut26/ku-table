@@ -369,7 +369,7 @@ const Index: React.FC = () => {
                                     src="/lf20_xtwyqv2j.json"
                                     style={{ height: "200px", width: "200px" }}
                                 />
-                                <div className="text-primary-content font-bold text-xl">
+                                <div className="font-bold text-xl">
                                     กำลังดึงข้อมูล...
                                 </div>
                             </div>
