@@ -103,7 +103,7 @@ const Index: React.FC = () => {
     };
 
     const callCreateLink = async () => {
-        let toastKey = toast.loading("กำลังสร้างลิงค์ของคุณ...");
+        let toastKey = toast.loading("กำลังสร้างลิงก์ของคุณ...");
         let axiosWithTokenServiceFrontend = new AxiosWithTokenServiceFrontend(
             accesstoken!
         );

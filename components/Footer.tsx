@@ -20,6 +20,10 @@ const Footer: React.FC<Props> = () => {
                     ku-table
                 </a>
             </div>
+            <div className="flex gap-2">
+                <a className="text-blue-500" href="https://ku-cs.com/pricacy">นโยบายส่วนบุคคล</a>
+                <a className="text-blue-500" href="https://ku-cs.com/cookie">นโยบายการใช้คุกกี้</a>
+            </div>
             <div className="flex gap-5">
                 <a
                     href="https://github.com/kucs37/ku-table"
