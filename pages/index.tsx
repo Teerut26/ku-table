@@ -21,6 +21,10 @@ import { LoginResponseInterface } from "interfaces/login.response.interface";
 import { browserName } from "react-device-detect";
 import Loading from "components/Loading";
 import { Player } from "@lottiefiles/react-lottie-player";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/root";
+import { createTheme, Slider, ThemeProvider } from "@mui/material";
+import { useTheme } from "next-themes";
 
 const GridContainer = styled.div`
     display: grid;
@@ -117,6 +121,22 @@ const Index: React.FC = () => {
         });
     };
 
+    const lang = useSelector((state: RootState) => state.langSlice.data);
+
+    const { theme } = useTheme();
+
+    const themeMui = createTheme({
+        palette: {
+            mode: theme === "light" ? "light" : "dark",
+            primary: {
+                main: "#00bcd4",
+            },
+        },
+        typography: {
+            fontFamily: "'Prompt', sans-serif",
+        },
+    });
+
     const day = "font-bold text-2xl flex justify-center items-center";
 
     return (
@@ -147,7 +167,9 @@ const Index: React.FC = () => {
                                         icon={faShare}
                                         size={"sm"}
                                     />
-                                    แชร์ตาราง
+                                    {lang === "th"
+                                        ? "แชร์ตาราง"
+                                        : "Share your table"}
                                 </button>
                             </div>
                         </div>
@@ -160,30 +182,22 @@ const Index: React.FC = () => {
                                     <div>
                                         <label className="label">
                                             <span className="label-text">
-                                                ปรับความละเอียดของรูปภาพ
+                                                {lang === "th"
+                                                    ? "ปรับความละเอียดของรูปภาพ"
+                                                    : "Adjust image resolution"}
                                             </span>
                                         </label>
-                                        <input
-                                            type="range"
-                                            min={1}
-                                            max={5}
-                                            defaultValue={scale}
-                                            className="range range-xs"
-                                            step={1}
-                                            onChange={(e) =>
-                                                setScale(
-                                                    Number.parseInt(
-                                                        e.target.value
-                                                    )
-                                                )
-                                            }
-                                        />
-                                        <div className="w-full flex justify-between text-xs px-2">
-                                            <span>1</span>
-                                            <span>2</span>
-                                            <span>3</span>
-                                            <span>4</span>
-                                            <span>5</span>
+                                        <div className="px-3">
+                                            <ThemeProvider theme={themeMui}>
+                                                <Slider
+                                                    defaultValue={scale}
+                                                    valueLabelDisplay="auto"
+                                                    step={1}
+                                                    marks
+                                                    min={1}
+                                                    max={5}
+                                                />
+                                            </ThemeProvider>
                                         </div>
                                     </div>
                                 )}

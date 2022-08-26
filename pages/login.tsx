@@ -1,20 +1,19 @@
-import { faPizzaSlice } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ToastError from "components/Toasts/Error";
-import ToastLoading from "components/Toasts/Loading";
-import ToastSuccess from "components/Toasts/Success";
+import { RootState } from "@/store/root";
+import { createTheme, TextField, ThemeProvider } from "@mui/material";
 import { LoginResponseInterface } from "interfaces/login.response.interface";
 import WithNavbar from "layouts/WithNavbar";
-import React, { useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
+import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import AxiosServiceFrontend from "services/frontend/axios.service";
 import { useLocalStorage } from "usehooks-ts";
 
 interface Props {}
 
 const Login: React.FC<Props> = () => {
-    const username = useRef<HTMLInputElement>(null);
-    const password = useRef<HTMLInputElement>(null);
+    const [username, setUsername] = useState<string | undefined>();
+    const [password, setPassword] = useState<string | undefined>();
 
     const [accesstoken, setAccesstoken] = useLocalStorage<string | undefined>(
         "accesstoken",
@@ -39,8 +38,15 @@ const Login: React.FC<Props> = () => {
         let toastKey = toast.loading("Loading...");
 
         try {
-            if (!username.current || !password.current) {
-                return;
+            if (
+                !username ||
+                !password ||
+                username.length === 0 ||
+                password.length === 0
+            ) {
+                return toast.error("กรอกข้อมูลให้ครบก่อน", {
+                    id: toastKey,
+                });
             }
 
             let axiosServiceFontend = new AxiosServiceFrontend();
@@ -48,8 +54,8 @@ const Login: React.FC<Props> = () => {
                 await axiosServiceFontend.axiosInstance.post<LoginResponseInterface>(
                     "/login",
                     {
-                        username: username.current.value,
-                        password: password.current.value,
+                        username,
+                        password,
                     }
                 );
 
@@ -81,38 +87,62 @@ const Login: React.FC<Props> = () => {
         return data;
     };
 
+    const lang = useSelector((state: RootState) => state.langSlice.data);
+
+    const { theme, setTheme } = useTheme();
+
+    const themeMui = createTheme({
+        palette: {
+            mode: theme === "light" ? "light" : "dark",
+            primary: {
+                main: "#00bcd4",
+            },
+        },
+        shape: {
+            borderRadius: 15,
+        },
+        typography: {
+            fontFamily: "'Prompt', sans-serif",
+        },
+    });
+
     return (
         <WithNavbar>
             <form
                 onSubmit={handleSubmit}
-                className="mt-5 flex flex-col gap-3 max-w-3xl mx-auto"
+                className="mt-5 flex flex-col gap- max-w-3xl mx-auto"
             >
-                <div className="form-control w-full">
-                    <label className="label">
-                        <span className="label-text">
-                            บัญชีผู้ใช้เครือข่ายนนทรี
-                        </span>
-                    </label>
-                    <input
-                        ref={username}
-                        type="text"
-                        placeholder="เช่น b63xxxxxxxx หรือ regxxx"
-                        className="input input-bordered w-full"
-                    />
-                </div>
-                <div className="form-control w-full">
-                    <label className="label">
-                        <span className="label-text">รหัสผ่าน</span>
-                    </label>
-                    <input
-                        ref={password}
-                        type="password"
-                        placeholder="รหัสผ่านบัญชีผู้ใช้เครือข่ายนนทรี"
-                        className="input input-bordered w-full"
-                    />
+                <div className="flex flex-col gap-3">
+                    <ThemeProvider theme={themeMui}>
+                        <TextField
+                            onChange={(e) => setUsername(e.target.value)}
+                            label={
+                                lang === "th"
+                                    ? "บัญชีผู้ใช้เครือข่ายนนทรี"
+                                    : "Nontri Account"
+                            }
+                            variant="outlined"
+                            placeholder={
+                                lang === "th"
+                                    ? "เช่น b63xxxxxxxx หรือ regxxx"
+                                    : "e.g. b63xxxxxxxx, regxxx"
+                            }
+                        />
+                        <TextField
+                            onChange={(e) => setPassword(e.target.value)}
+                            type="password"
+                            label={lang === "th" ? "รหัสผ่าน" : "Password"}
+                            variant="outlined"
+                            placeholder={
+                                lang === "th"
+                                    ? "รหัสผ่านบัญชีผู้ใช้เครือข่ายนนทรี"
+                                    : "Nontri Password"
+                            }
+                        />
+                    </ThemeProvider>
                 </div>
                 <button type="submit" className="btn btn-primary mt-5">
-                    เข้าสู่ระบบ
+                    {lang === "th" ? "เข้าสู่ระบบ" : "Login"}
                 </button>
             </form>
         </WithNavbar>

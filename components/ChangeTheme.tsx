@@ -1,7 +1,5 @@
-import styled from "@emotion/styled";
 import { useTheme } from "next-themes";
 import React from "react";
-import { useLocalStorage } from "usehooks-ts";
 
 interface Props {}
 
