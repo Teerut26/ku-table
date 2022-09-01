@@ -21,6 +21,8 @@ import { LoginResponseInterface } from "interfaces/login.response.interface";
 import { browserName } from "react-device-detect";
 import Loading from "components/Loading";
 import { Player } from "@lottiefiles/react-lottie-player";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/root";
 
 const GridContainer = styled.div`
     display: grid;
@@ -53,6 +55,8 @@ const Index: React.FC = () => {
         "scale_image_download",
         1
     );
+
+    const lang = useSelector((state: RootState) => state.langSlice.data);
 
     const callAPI = async () => {
         try {
@@ -121,9 +125,33 @@ const Index: React.FC = () => {
         });
     };
 
-    const handleSearch = (word:string) => {
-        let new_data = groupCourse?.results.filter(item=>item.course)
-    }
+    const handleSearch = (word: string) => {
+        let new_data = groupCourse?.results[0].course.filter(
+            (item) =>
+                item.subject_name_th.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.subject_name_en.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.subject_code.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.teacher_name.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.teacher_name_en.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.room_name_en.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.room_name_th.toLocaleLowerCase().match(word.toLocaleLowerCase())
+
+        );
+
+        if (word.length > 0) {
+            setGroupCourse2({
+                ...groupCourse!,
+                results: [
+                    {
+                        ...groupCourse!.results[0],
+                        course: new_data!,
+                    },
+                ],
+            });
+        } else {
+            setGroupCourse2(groupCourse);
+        }
+    };
 
     const day = "font-bold text-2xl flex justify-center items-center";
 
@@ -198,7 +226,12 @@ const Index: React.FC = () => {
                             </div>
                         </div>
                         <div>
-                        {/* <input type="text" placeholder="ค้นหาชื่อวิชา/รหัสวิชา" className="input input-bordered w-full" /> */}
+                            <input
+                                onChange={(e) => handleSearch(e.target.value)}
+                                type="text"
+                                placeholder={lang === "th" ? "ค้นหา ชื่อวิชา/รหัสวิชา/อาจารย์/ห้อง" : "Search for a course name/course code/teacher/room"}
+                                className="input input-bordered w-full"
+                            />
                         </div>
                         <div className="overflow-x-auto">
                             <div
