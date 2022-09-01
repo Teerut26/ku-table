@@ -39,6 +39,9 @@ const Index: React.FC = () => {
     const [groupCourse, setGroupCourse] = useState<
         GroupCourseInterface | undefined
     >();
+    const [groupCourse2, setGroupCourse2] = useState<
+        GroupCourseInterface | undefined
+    >();
 
     const { isLive, isLoading } = useCheckSession();
     const [user, setUser] = useLocalStorage<LoginResponseInterface | undefined>(
@@ -61,6 +64,7 @@ const Index: React.FC = () => {
                     `/group-course?stdId=${user!.user.student.stdId}`
                 );
             setGroupCourse(data);
+            setGroupCourse2(data);
         } catch (error) {
             console.log(error);
         }
@@ -106,7 +110,7 @@ const Index: React.FC = () => {
         let { data } = await axiosWithTokenServiceFrontend.axiosInstance.post(
             "/create-link",
             {
-                data: JSON.stringify(groupCourse?.results[0]),
+                data: JSON.stringify(groupCourse2?.results[0]),
             }
         );
         navigator.clipboard.writeText(
@@ -117,12 +121,16 @@ const Index: React.FC = () => {
         });
     };
 
+    const handleSearch = (word:string) => {
+        let new_data = groupCourse?.results.filter(item=>item.course)
+    }
+
     const day = "font-bold text-2xl flex justify-center items-center";
 
     return (
         <CheckLogin>
             <WithNavbar>
-                {groupCourse ? (
+                {groupCourse2 ? (
                     <div className="flex flex-col gap-2 py-2 ">
                         <div className="flex justify-between items-center max-w-[105rem] mx-auto w-full">
                             <div className="font-bold text-3xl hidden md:block py-3">
@@ -153,7 +161,7 @@ const Index: React.FC = () => {
                         </div>
                         <div className="flex justify-between items-center">
                             <div className="hidden md:block font-bold text-xl">
-                                {groupCourse?.results[0].peroid_date}
+                                {groupCourse2?.results[0].peroid_date}
                             </div>
                             <div className="w-full md:max-w-[12rem]">
                                 {browserName === "Chrome" && (
@@ -188,6 +196,9 @@ const Index: React.FC = () => {
                                     </div>
                                 )}
                             </div>
+                        </div>
+                        <div>
+                        <input type="text" placeholder="ค้นหาชื่อวิชา/รหัสวิชา" className="input input-bordered w-full" />
                         </div>
                         <div className="overflow-x-auto">
                             <div
@@ -252,7 +263,7 @@ const Index: React.FC = () => {
                                         </ChildGrid>
                                         <Courses
                                             className="border-l-[1.5rem] border-2 border-yellow-200 base-content"
-                                            groupCourse={groupCourse!}
+                                            groupCourse={groupCourse2!}
                                             day={"MON"}
                                         />
                                     </GridContainer>
@@ -266,7 +277,7 @@ const Index: React.FC = () => {
                                         </ChildGrid>
                                         <Courses
                                             className="border-l-[1.5rem] border-2 border-pink-400 base-content"
-                                            groupCourse={groupCourse!}
+                                            groupCourse={groupCourse2!}
                                             day={"TUE"}
                                         />
                                     </GridContainer>
@@ -280,7 +291,7 @@ const Index: React.FC = () => {
                                         </ChildGrid>
                                         <Courses
                                             className="border-l-[1.5rem] border-2 border-green-400 base-content"
-                                            groupCourse={groupCourse!}
+                                            groupCourse={groupCourse2!}
                                             day={"WED"}
                                         />
                                     </GridContainer>
@@ -295,7 +306,7 @@ const Index: React.FC = () => {
                                         </ChildGrid>
                                         <Courses
                                             className="border-l-[1.5rem] border-2 border-orange-400 base-content"
-                                            groupCourse={groupCourse!}
+                                            groupCourse={groupCourse2!}
                                             day={"THU"}
                                         />
                                     </GridContainer>
@@ -310,7 +321,7 @@ const Index: React.FC = () => {
                                         </ChildGrid>
                                         <Courses
                                             className="border-l-[1.5rem] border-2 border-blue-400 base-content"
-                                            groupCourse={groupCourse!}
+                                            groupCourse={groupCourse2!}
                                             day={"FRI"}
                                         />
                                     </GridContainer>
@@ -325,7 +336,7 @@ const Index: React.FC = () => {
                                         </ChildGrid>
                                         <Courses
                                             className="border-l-[1.5rem] border-2 border-purple-500 base-content"
-                                            groupCourse={groupCourse!}
+                                            groupCourse={groupCourse2!}
                                             day={"SAT"}
                                         />
                                     </GridContainer>
@@ -340,7 +351,7 @@ const Index: React.FC = () => {
                                         </ChildGrid>
                                         <Courses
                                             className="border-l-[1.5rem] border-2 border-red-400 base-content"
-                                            groupCourse={groupCourse!}
+                                            groupCourse={groupCourse2!}
                                             day={"SUN"}
                                         />
                                     </GridContainer>
