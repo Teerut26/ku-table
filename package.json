@@ -22,7 +22,7 @@
     "apollo-server-core": "^3.6.3",
     "apollo-server-micro": "^3.6.3",
     "axios": "^0.26.1",
-    "chrome-aws-lambda": "^10.1.0",
+    "chrome-aws-lambda": "^2.1.1",
     "daisyui": "^2.17.0",
     "dom-to-image": "^2.6.0",
     "file-saver": "^2.0.5",
