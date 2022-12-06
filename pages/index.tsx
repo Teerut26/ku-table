@@ -23,7 +23,6 @@ import Loading from "components/Loading";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/root";
-import axios from "axios";
 
 const GridContainer = styled.div`
     display: grid;
@@ -87,20 +86,24 @@ const Index: React.FC = () => {
 
     const handleDownload = async () => {
         let toastKey = toast.loading("กำลังสร้างรูปภาพของคุณ...");
-        setIscapture(true);
-        let res = await axios.post("/api/gen-image", groupCourse?.results[0], {
-            responseType: "arraybuffer",
-        });
-        setIscapture(false);
-        toast.success("สำเร็จ", {
-            id: toastKey,
-        });
-        saveAs(
-            "data:image/png;base64," +
-                Buffer.from(res.data, "binary").toString("base64"),
-            `kutable-${user?.user.student.stdId}.png`
-        );
 
+        setIscapture(true);
+
+        setTimeout(async () => {
+            const dataUrl = await domtoimage.toPng(area.current as any, {
+                width: area.current?.clientWidth! * scale,
+                height: area.current?.clientHeight! * scale,
+                style: {
+                    transform: "scale(" + scale + ")",
+                    transformOrigin: "top left",
+                },
+            });
+            toast.success("สำเร็จ", {
+                id: toastKey,
+            });
+            saveAs(dataUrl, `kutable-${user?.user.student.stdId}.png`);
+            setIscapture(false);
+        }, 1000);
     };
 
     const callCreateLink = async () => {
@@ -125,27 +128,14 @@ const Index: React.FC = () => {
     const handleSearch = (word: string) => {
         let new_data = groupCourse?.results[0].course.filter(
             (item) =>
-                item.subject_name_th
-                    .toLocaleLowerCase()
-                    .match(word.toLocaleLowerCase()) ||
-                item.subject_name_en
-                    .toLocaleLowerCase()
-                    .match(word.toLocaleLowerCase()) ||
-                item.subject_code
-                    .toLocaleLowerCase()
-                    .match(word.toLocaleLowerCase()) ||
-                item.teacher_name
-                    .toLocaleLowerCase()
-                    .match(word.toLocaleLowerCase()) ||
-                item.teacher_name_en
-                    .toLocaleLowerCase()
-                    .match(word.toLocaleLowerCase()) ||
-                item.room_name_en
-                    .toLocaleLowerCase()
-                    .match(word.toLocaleLowerCase()) ||
-                item.room_name_th
-                    .toLocaleLowerCase()
-                    .match(word.toLocaleLowerCase())
+                item.subject_name_th.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.subject_name_en.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.subject_code.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.teacher_name.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.teacher_name_en.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.room_name_en.toLocaleLowerCase().match(word.toLocaleLowerCase()) ||
+                item.room_name_th.toLocaleLowerCase().match(word.toLocaleLowerCase())
+
         );
 
         if (word.length > 0) {
@@ -201,16 +191,45 @@ const Index: React.FC = () => {
                             <div className="hidden md:block font-bold text-xl">
                                 {groupCourse2?.results[0].peroid_date}
                             </div>
+                            <div className="w-full md:max-w-[12rem]">
+                                {browserName === "Chrome" && (
+                                    <div>
+                                        <label className="label">
+                                            <span className="label-text">
+                                                ปรับความละเอียดของรูปภาพ
+                                            </span>
+                                        </label>
+                                        <input
+                                            type="range"
+                                            min={1}
+                                            max={5}
+                                            defaultValue={scale}
+                                            className="range range-xs"
+                                            step={1}
+                                            onChange={(e) =>
+                                                setScale(
+                                                    Number.parseInt(
+                                                        e.target.value
+                                                    )
+                                                )
+                                            }
+                                        />
+                                        <div className="w-full flex justify-between text-xs px-2">
+                                            <span>1</span>
+                                            <span>2</span>
+                                            <span>3</span>
+                                            <span>4</span>
+                                            <span>5</span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                         <div>
                             <input
                                 onChange={(e) => handleSearch(e.target.value)}
                                 type="text"
-                                placeholder={
-                                    lang === "th"
-                                        ? "ค้นหา ชื่อวิชา/รหัสวิชา/อาจารย์/ห้อง"
-                                        : "Search for a course name/course code/teacher/room"
-                                }
+                                placeholder={lang === "th" ? "ค้นหา ชื่อวิชา/รหัสวิชา/อาจารย์/ห้อง" : "Search for a course name/course code/teacher/room"}
                                 className="input input-bordered w-full"
                             />
                         </div>
