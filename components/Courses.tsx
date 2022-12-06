@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
+import { faBook, faFlag, faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GroupCourseInterface } from "interfaces/group.course.interface";
 import React, { useState } from "react";
 import tw from "twin.macro";
+import { motion, AnimatePresence } from "framer-motion";
 import ChildGrid from "./ChildGrid";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/root";
