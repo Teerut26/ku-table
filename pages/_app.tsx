@@ -11,7 +11,7 @@ import { RootState } from "@/store/root";
 import * as ga from '../libs/_utils/ga'
 import { useRouter } from "next/router";
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+const MyApp: React.FC<any> = ({ Component, pageProps }) => {
     const dispatch = useDispatch();
     const langRedux = useSelector((state: RootState) => state.langSlice.data);
     const [lang, setLang] = useLocalStorage<langType>("lang", "th");
