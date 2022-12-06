@@ -198,7 +198,7 @@ const Index: React.FC = () => {
                             </div>
                         </div>
                         <div>
-                        {/* <input type="text" placeholder="ค้นหาชื่อวิชา/รหัสวิชา" className="input input-bordered w-full" /> */}
+                        <input type="text" placeholder="ค้นหาชื่อวิชา/รหัสวิชา" className="input input-bordered w-full" />
                         </div>
                         <div className="overflow-x-auto">
                             <div
